@@ -12,6 +12,8 @@ namespace ToplivoCodeFirst.Models
         protected override void Seed(ToplivoContext db)
         {
             db.Tanks.Add(new Tank { TankID = 1, TankType = "Цистерна", TankWeight = 1863, TankVolume = 123, TankMaterial = "Сталь" });
+            db.Fuels.Add(new Fuel { FuelID = 1, FuelType = "Нефть", FuelDensity = 1863});
+
             db.SaveChanges();
             base.Seed(db);
         }

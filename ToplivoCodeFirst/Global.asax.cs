@@ -14,7 +14,7 @@ namespace ToplivoCodeFirst
     {
         protected void Application_Start()
         {
-            Database.SetInitializer<ToplivoContext>(new ToplivoDbInitializer());
+            Database.SetInitializer(new ToplivoDbInitializer());
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

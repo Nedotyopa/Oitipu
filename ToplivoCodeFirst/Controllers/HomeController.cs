@@ -14,8 +14,8 @@ namespace ToplivoCodeFirst.Controllers
         ToplivoContext db = new ToplivoContext();
         public ActionResult Index()
         {
-            
 
+            Database.SetInitializer(new ToplivoDbInitializer());
             IEnumerable<Fuel> Fuels = db.Fuels;
             return View();
         }
