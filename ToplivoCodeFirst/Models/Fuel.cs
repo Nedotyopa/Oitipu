@@ -11,11 +11,6 @@ namespace ToplivoCodeFirst.Models
         //Плотность вида топлива
         public float FuelDensity { get; set; }
         public virtual ICollection<Operation> Operations { get; set; }
-        public Fuel()
-        {
-            Operations = new List<Operation>();
-
-        }
-
+ 
     }
 }

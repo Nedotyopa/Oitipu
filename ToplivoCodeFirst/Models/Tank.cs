@@ -17,11 +17,7 @@ namespace ToplivoCodeFirst.Models
         //ссылка на файл изображения емкости
         public string TankPicture { get; set; }
         public virtual ICollection<Operation> Operations { get; set; }
-        public Tank()
-        {
-            Operations = new List<Operation>();
-
-        }
+ 
 
     }
 }

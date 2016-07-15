@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ToplivoCodeFirst.Models
+﻿namespace ToplivoCodeFirst.Models
 {
     public class Operation
     {
@@ -21,8 +16,6 @@ namespace ToplivoCodeFirst.Models
         public virtual Fuel Fuel { get; set; }
         //ссылка на емкости
         public virtual Tank Tank { get; set; }
-
-
 
     }
 }
