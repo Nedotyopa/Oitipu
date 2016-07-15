@@ -5,7 +5,8 @@ namespace ToplivoCodeFirst.Models
 
     public class ToplivoContext : DbContext
     {
-        public ToplivoContext() : base("ToplivoContext")
+        
+        public ToplivoContext() : base("name=ToplivoContext")
         {
         }
         public virtual DbSet<Fuel> Fuels { get; set; }
