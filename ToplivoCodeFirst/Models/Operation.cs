@@ -18,9 +18,9 @@ namespace ToplivoCodeFirst.Models
         //Дата операции
         public System.DateTime Date { get; set; }
         //ссылка на виды топлива
-        public Fuel Fuel { get; set; }
+        public virtual Fuel Fuel { get; set; }
         //ссылка на емкости
-        public Tank Tank { get; set; }
+        public virtual Tank Tank { get; set; }
 
 
 

@@ -11,12 +11,10 @@ namespace ToplivoCodeFirst.Controllers
 
     public class HomeController : Controller
     {
-        ToplivoContext db = new ToplivoContext();
+        private ToplivoContext db = new ToplivoContext();
         public ActionResult Index()
         {
 
-            Database.SetInitializer(new ToplivoDbInitializer());
-            IEnumerable<Fuel> Fuels = db.Fuels;
             return View();
         }
 

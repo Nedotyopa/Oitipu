@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace ToplivoCodeFirst.Models
 {
@@ -13,7 +10,7 @@ namespace ToplivoCodeFirst.Models
         public string FuelType { get; set; }
         //Плотность вида топлива
         public float FuelDensity { get; set; }
-        public ICollection<Operation> Operations { get; set; }
+        public virtual ICollection<Operation> Operations { get; set; }
         public Fuel()
         {
             Operations = new List<Operation>();

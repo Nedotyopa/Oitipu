@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace ToplivoCodeFirst.Models
 {
@@ -19,7 +16,7 @@ namespace ToplivoCodeFirst.Models
         public string TankMaterial { get; set; }
         //ссылка на файл изображения емкости
         public string TankPicture { get; set; }
-        public ICollection<Operation> Operations { get; set; }
+        public virtual ICollection<Operation> Operations { get; set; }
         public Tank()
         {
             Operations = new List<Operation>();

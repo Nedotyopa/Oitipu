@@ -15,7 +15,6 @@ namespace ToplivoCodeFirst.Models
             db.Fuels.Add(new Fuel { FuelID = 1, FuelType = "Нефть", FuelDensity = 1863});
 
             db.SaveChanges();
-            base.Seed(db);
         }
     }
 }
