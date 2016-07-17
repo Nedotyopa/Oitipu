@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Data.Entity;
 using System.IO;
+using System.Web;
 
 namespace ToplivoCodeFirst.Models
 {
-    public class ToplivoDbInitializer2 : DropCreateDatabaseAlways<ToplivoContext>
+    public class ToplivoDbInitializer_runSQL : DropCreateDatabaseAlways<ToplivoContext>
     {
         protected override void Seed(ToplivoContext db)
         {
-            string readPath = @"C:\Users\olas\Source\Repos\ToplivoCodeFirst\ToplivoCodeFirst\FillDB.sql";
+            string readPath = HttpContext.Current.Server.MapPath("~") + "/FillDB.sql";
 
             string SQLstring = "";
             try
