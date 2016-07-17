@@ -15,7 +15,7 @@ namespace ToplivoCodeFirst
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Database.SetInitializer(new ToplivoDbInitializer());
+            Database.SetInitializer(new ToplivoDbInitializer2());
             using (var db = new ToplivoContext())
             {
                 db.Database.Initialize(true);

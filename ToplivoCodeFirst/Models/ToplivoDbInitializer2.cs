@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.IO;
 
 namespace ToplivoCodeFirst.Models
 {
@@ -7,7 +8,7 @@ namespace ToplivoCodeFirst.Models
     {
         protected override void Seed(ToplivoContext db)
         {
-            string readPath = @"FillDB.sql";
+            string readPath = @"C:\Users\olas\Source\Repos\ToplivoCodeFirst\ToplivoCodeFirst\FillDB.sql";
 
             string SQLstring = "";
             try
@@ -16,9 +17,11 @@ namespace ToplivoCodeFirst.Models
                 {
                     SQLstring = sr.ReadToEnd();
                 }
-                
 
-                
+                db.Database.ExecuteSqlCommand (SQLstring);
+
+                base.Seed(db);
+
             }
             catch (Exception e)
             {
