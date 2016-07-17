@@ -17,10 +17,10 @@ namespace ToplivoCodeFirst
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             //Инициализация БД путем выполнения кода в классе инициализатора с использование методов EF
-            //Database.SetInitializer(new ToplivoDbInitializer());
+            Database.SetInitializer(new ToplivoDbInitializer());
             
             //Инициализация БД путем запуска SQL инструкции из файла FillDB.sql
-            Database.SetInitializer(new ToplivoDbInitializer_runSQL());
+            //Database.SetInitializer(new ToplivoDbInitializer_runSQL());
 
             using (var db = new ToplivoContext())
             {
