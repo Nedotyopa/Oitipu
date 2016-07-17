@@ -137,6 +137,7 @@
     <Compile Include="Models\Tank.cs" />
     <Compile Include="Models\ToplivoContext.cs" />
     <Compile Include="Models\ToplivoDbInitializer.cs" />
+    <Compile Include="Models\ToplivoDbInitializer2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
