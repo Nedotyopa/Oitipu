@@ -133,8 +133,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Fuel.cs" />
+    <Compile Include="Models\FuelRepository.cs" />
+    <Compile Include="Models\IRepository.cs" />
     <Compile Include="Models\Operation.cs" />
+    <Compile Include="Models\OperationReposiroty.cs" />
+    <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\Tank.cs" />
+    <Compile Include="Models\TankRepository.cs" />
     <Compile Include="Models\ToplivoContext.cs" />
     <Compile Include="Models\ToplivoDbInitializer.cs" />
     <Compile Include="Models\ToplivoDbInitializer_runSQL.cs" />
