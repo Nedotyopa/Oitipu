@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ToplivoCodeFirst.Models
 {
-    public class OperationReposiroty : IRepository<Operation>
+    public class OperationRepository : IRepository<Operation>
     {
         public void Create(Operation item)
         {
