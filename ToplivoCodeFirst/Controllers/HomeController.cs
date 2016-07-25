@@ -12,13 +12,20 @@ namespace ToplivoCodeFirst.Controllers
     public class HomeController : Controller
     {
 
-        // создаем контекст данных
-        ToplivoContext db = new ToplivoContext();
+        IRepository<Operation> db;
+        public HomeController()
+        {
+            // создаем контекст данных
+            db = new OperationRepository();
+        }
+
 
         public ActionResult Index()
         {
+              
+            
             //Получаем из БД  100 объектов Operation, при этом в случае необходимости будут подгудаться данные из Tank и Fuel
-            IEnumerable<Operation> operations = db.Operations.Include(o=>o.Tank).Include(o=>o.Fuel).Take(100).OrderByDescending(o=>o.Date);
+            IEnumerable<Operation> operations = db.GetNumberItems(100);
             // передаем все объекты в динамическое свойство Operations в ViewBag
             ViewBag.Operations = operations;
             return View();

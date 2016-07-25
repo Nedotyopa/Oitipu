@@ -3,15 +3,16 @@ using System.Collections.Generic;
 
 namespace ToplivoCodeFirst.Models
 {
-    interface IRepository<T> where T:class
+    interface IRepository<T>:IDisposable where T:class
     {
-        List<T> GetAll();
+        IEnumerable<T> GetAll();
         T Get(int id);
-        T GetNumberItems(int numberItems);
-        List<T> Find(Func<T, Boolean> predicate);
+        IEnumerable<T> GetNumberItems(int numberItems);
+        IEnumerable<T> Find(Func<T, Boolean> predicate);
         void Create(T item);
-        void Delete(T item);
+        void Delete(int id);
         void Update(T item);
+        void Save();  // сохранение изменений
 
     }
 }
