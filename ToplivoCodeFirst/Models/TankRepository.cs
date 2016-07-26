@@ -18,10 +18,10 @@ namespace ToplivoCodeFirst.Models
         {
             db.Tanks.Add(tank);
         }
-        public string SaveFilePicture(Tank tank, HttpPostedFileBase upload)
+        public string CreateWithPicture(Tank tank, HttpPostedFileBase upload)
         {
 
-            string fileName = ""; //имя 
+            string fileName = "";  
             if (upload != null)
             {
                 // формируем имя файла
@@ -29,8 +29,24 @@ namespace ToplivoCodeFirst.Models
                 // сохраняем файл в папку Images в приложении
                 upload.SaveAs(HttpContext.Current.Server.MapPath("~/Images/" + fileName));
             }
+            tank.TankPicture = fileName;
+            Create(tank);
+            return fileName;
 
+        }
+        public string UpdateWithPicture(Tank tank, HttpPostedFileBase upload)
+        {
 
+            string fileName = "";  
+            if (upload != null)
+            {
+                // формируем имя файла
+                fileName = tank.TankID.ToString() + System.IO.Path.GetExtension(upload.FileName);
+                // сохраняем файл в папку Images в приложении
+                upload.SaveAs(HttpContext.Current.Server.MapPath("~/Images/" + fileName));
+            }
+            tank.TankPicture = fileName;
+            Update(tank);
             return fileName;
 
         }
