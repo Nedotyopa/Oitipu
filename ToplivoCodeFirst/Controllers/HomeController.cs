@@ -23,11 +23,13 @@ namespace ToplivoCodeFirst.Controllers
         public ActionResult Index()
         {
 
-            int NumberOperations = 100;
+            int NumberOperations = 100;//Количество записей на главной странице
+            // передаем значение количества объектов в динамическое свойство NumberOperations
+
             ViewBag.NumberOperations = NumberOperations;
 
             //Получаем из БД  100 объектов Operation, при этом в случае необходимости будут подгружаться данные из Tank и Fuel
-            IEnumerable<Operation> operations = db.GetNumberItems(NumberOperations);
+            var operations = db.GetNumberItems(NumberOperations);
             // передаем все объекты в динамическое свойство Operations в ViewBag
             ViewBag.Operations = operations;
             return View();
@@ -35,14 +37,14 @@ namespace ToplivoCodeFirst.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Описание приложения";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Страница с контактыми данными";
 
             return View();
         }
