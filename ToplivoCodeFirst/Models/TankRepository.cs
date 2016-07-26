@@ -1,84 +1,99 @@
 ﻿using System;
+using System.Linq;
 using System.Data.Entity;
 using System.Collections.Generic;
+using System.Web;
 
 namespace ToplivoCodeFirst.Models
 {
     public class TankRepository : IRepository<Tank>
     {
-        public void Create(Tank item)
+        private ToplivoContext db;
+        public TankRepository()
         {
-            throw new NotImplementedException();
+            db = new ToplivoContext();
+        }
+
+        public void Create(Tank tank)
+        {
+            db.Tanks.Add(tank);
+        }
+        public string SaveFilePicture(Tank tank, HttpPostedFileBase upload)
+        {
+
+            string fileName = ""; //имя 
+            if (upload != null)
+            {
+                // формируем имя файла
+                fileName = tank.TankID.ToString() + System.IO.Path.GetExtension(upload.FileName);
+                // сохраняем файл в папку Images в приложении
+                upload.SaveAs(HttpContext.Current.Server.MapPath("~/Images/" + fileName));
+            }
+
+
+            return fileName;
+
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Tank tank = db.Tanks.Find(id);
+            if (tank != null)
+            {
+                db.Tanks.Remove(tank);
+            }
         }
 
         public IEnumerable<Tank> Find(Func<Tank, bool> predicate)
         {
-            throw new NotImplementedException();
+            return db.Tanks.Where(predicate).ToList();
         }
 
         public Tank Get(int id)
         {
-            throw new NotImplementedException();
+            return db.Tanks.Find(id);
         }
 
         public IEnumerable<Tank> GetAll()
         {
-            throw new NotImplementedException();
+            return db.Tanks;
         }
 
         public IEnumerable<Tank> GetNumberItems(int numberItems)
         {
-            throw new NotImplementedException();
+            return db.Tanks.Take(numberItems);
         }
 
-        public void Update(Tank item)
+        public void Update(Tank tank)
         {
-            throw new NotImplementedException();
+            db.Entry(tank).State = EntityState.Modified;
         }
 
-        #region IDisposable Support
-        private bool disposedValue = false; // Для определения избыточных вызовов
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    // TODO: освободить управляемое состояние (управляемые объекты).
-                }
-
-                // TODO: освободить неуправляемые ресурсы (неуправляемые объекты) и переопределить ниже метод завершения.
-                // TODO: задать большим полям значение NULL.
-
-                disposedValue = true;
-            }
-        }
-
-        // TODO: переопределить метод завершения, только если Dispose(bool disposing) выше включает код для освобождения неуправляемых ресурсов.
-        // ~TankRepository() {
-        //   // Не изменяйте этот код. Разместите код очистки выше, в методе Dispose(bool disposing).
-        //   Dispose(false);
-        // }
-
-        // Этот код добавлен для правильной реализации шаблона высвобождаемого класса.
-        public void Dispose()
-        {
-            // Не изменяйте этот код. Разместите код очистки выше, в методе Dispose(bool disposing).
-            Dispose(true);
-            // TODO: раскомментировать следующую строку, если метод завершения переопределен выше.
-            // GC.SuppressFinalize(this);
-        }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            db.SaveChanges();
         }
-        #endregion
+
+        private bool disposed = false;
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
     }
 }

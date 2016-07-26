@@ -28,8 +28,9 @@ namespace ToplivoCodeFirst.Controllers
 
             ViewBag.NumberOperations = NumberOperations;
 
-            //Получаем из БД  100 объектов Operation, при этом в случае необходимости будут подгружаться данные из Tank и Fuel
-            var operations = db.GetNumberItems(NumberOperations);
+            //Получаем из БД  100 объектов Operation, при этом будут подгружаться данные из Tank и Fuel
+            IEnumerable<Operation> operations = db.GetNumberItems(NumberOperations);
+
             // передаем все объекты в динамическое свойство Operations в ViewBag
             ViewBag.Operations = operations;
             return View();

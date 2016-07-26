@@ -6,6 +6,11 @@ namespace ToplivoCodeFirst.Models
 {
     public class FuelRepository : IRepository<Fuel>
     {
+        private ToplivoContext db;
+        public FuelRepository()
+        {
+            db = new ToplivoContext();
+        }
         public void Create(Fuel item)
         {
             throw new NotImplementedException();
@@ -16,6 +21,7 @@ namespace ToplivoCodeFirst.Models
             throw new NotImplementedException();
         }
 
+        
         public IEnumerable<Fuel> Find(Func<Fuel, bool> predicate)
         {
             throw new NotImplementedException();
@@ -36,49 +42,36 @@ namespace ToplivoCodeFirst.Models
             throw new NotImplementedException();
         }
 
+        
+
         public void Update(Fuel item)
         {
             throw new NotImplementedException();
         }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // Для определения избыточных вызовов
-
-        protected virtual void Dispose(bool disposing)
+        public void Save()
         {
-            if (!disposedValue)
+            db.SaveChanges();
+        }
+
+        private bool disposed = false;
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
             {
                 if (disposing)
                 {
-                    // TODO: освободить управляемое состояние (управляемые объекты).
+                    db.Dispose();
                 }
-
-                // TODO: освободить неуправляемые ресурсы (неуправляемые объекты) и переопределить ниже метод завершения.
-                // TODO: задать большим полям значение NULL.
-
-                disposedValue = true;
             }
+            this.disposed = true;
         }
 
-        // TODO: переопределить метод завершения, только если Dispose(bool disposing) выше включает код для освобождения неуправляемых ресурсов.
-        // ~FuelRepository() {
-        //   // Не изменяйте этот код. Разместите код очистки выше, в методе Dispose(bool disposing).
-        //   Dispose(false);
-        // }
-
-        // Этот код добавлен для правильной реализации шаблона высвобождаемого класса.
         public void Dispose()
         {
-            // Не изменяйте этот код. Разместите код очистки выше, в методе Dispose(bool disposing).
             Dispose(true);
-            // TODO: раскомментировать следующую строку, если метод завершения переопределен выше.
-            // GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this);
         }
-
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
     }
+
 }
