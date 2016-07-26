@@ -11,12 +11,12 @@ namespace ToplivoCodeFirst.Controllers
 
     public class HomeController : Controller
     {
-
-        IRepository<Operation> db;
+        UnitOfWork unitOfWork;
         public HomeController()
         {
-            // создаем контекст данных
-            db = new OperationRepository();
+            // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
+            unitOfWork = new UnitOfWork();
+            
         }
 
 
@@ -29,7 +29,7 @@ namespace ToplivoCodeFirst.Controllers
             ViewBag.NumberOperations = NumberOperations;
 
             //Получаем из БД  100 объектов Operation, при этом будут подгружаться данные из Tank и Fuel
-            IEnumerable<Operation> operations = db.GetNumberItems(NumberOperations);
+            IEnumerable<Operation> operations = unitOfWork.Operations.GetNumberItems(NumberOperations);
 
             // передаем все объекты в динамическое свойство Operations в ViewBag
             ViewBag.Operations = operations;

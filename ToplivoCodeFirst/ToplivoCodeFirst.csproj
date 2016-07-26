@@ -142,6 +142,7 @@
     <Compile Include="Models\ToplivoContext.cs" />
     <Compile Include="Models\ToplivoDbInitializer.cs" />
     <Compile Include="Models\ToplivoDbInitializer_runSQL.cs" />
+    <Compile Include="Models\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

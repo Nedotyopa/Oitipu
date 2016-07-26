@@ -8,9 +8,10 @@ namespace ToplivoCodeFirst.Models
     public class FuelRepository : IRepository<Fuel>
     {
         private ToplivoContext db;
-        public FuelRepository()
+        public FuelRepository(ToplivoContext context)
         {
-            db = new ToplivoContext();
+            db = context;
+
         }
         public void Create(Fuel fuel)
         {

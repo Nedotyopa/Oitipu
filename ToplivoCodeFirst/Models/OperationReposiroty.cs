@@ -8,9 +8,9 @@ namespace ToplivoCodeFirst.Models
     public class OperationRepository : IRepository<Operation>
     {
         private ToplivoContext db;
-        public OperationRepository()
+        public OperationRepository(ToplivoContext context)
         {
-            db = new ToplivoContext();
+            db = context;
         }
         public void Create(Operation operation)
         {

@@ -9,9 +9,9 @@ namespace ToplivoCodeFirst.Models
     public class TankRepository : IRepository<Tank>
     {
         private ToplivoContext db;
-        public TankRepository()
+        public TankRepository(ToplivoContext context)
         {
-            db = new ToplivoContext();
+            db = context;
         }
 
         public void Create(Tank tank)
