@@ -22,10 +22,12 @@ namespace ToplivoCodeFirst.Controllers
 
         public ActionResult Index()
         {
-              
-            
-            //Получаем из БД  100 объектов Operation, при этом в случае необходимости будут подгудаться данные из Tank и Fuel
-            IEnumerable<Operation> operations = db.GetNumberItems(100);
+
+            int NumberOperations = 100;
+            ViewBag.NumberOperations = NumberOperations;
+
+            //Получаем из БД  100 объектов Operation, при этом в случае необходимости будут подгружаться данные из Tank и Fuel
+            IEnumerable<Operation> operations = db.GetNumberItems(NumberOperations);
             // передаем все объекты в динамическое свойство Operations в ViewBag
             ViewBag.Operations = operations;
             return View();

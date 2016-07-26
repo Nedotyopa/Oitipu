@@ -45,7 +45,7 @@ namespace ToplivoCodeFirst.Models
 
         public IEnumerable<Operation> GetNumberItems(int numberItems)
         {
-            return db.Operations.Include(o => o.Fuel).Include(o => o.Tank).Take(numberItems);
+            return db.Operations.Include(o => o.Fuel).Include(o => o.Tank).Take(numberItems).OrderByDescending(o=>o.Date);
         }
 
         public void Update(Operation operation)

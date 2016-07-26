@@ -4,7 +4,7 @@
 
 <div class="jumbotron">
     <h1>Топливная база</h1>
-    <h2>Последние операции</h2>
+    <h2>Последние  @ViewBag.NumberOperations операций</h2>
 
 <table border="1">
     <tr>
@@ -23,7 +23,7 @@
             <td>@b.Tank.TankType</td>
             <td>@b.Fuel.FuelType</td>
             <td>@b.Inc_Exp</td>
-            <td>@b.Date</td>
+            <td>@b.Date.ToString("dd.MM.yyyy")</td>
 
 
         </tr>
