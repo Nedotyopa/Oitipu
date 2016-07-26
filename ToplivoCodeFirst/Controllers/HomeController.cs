@@ -39,15 +39,18 @@ namespace ToplivoCodeFirst.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Описание приложения";
-
             return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Страница с контактыми данными";
-
             return View();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

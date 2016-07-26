@@ -12,7 +12,7 @@ namespace ToplivoCodeFirst.Models
         void Create(T item);//создать объект
         void Delete(int id);//удалить объект
         void Update(T item);//обновить объект
-        void Save();  // сохранение сделанных изменений
+        void Save(); // сохранение сделанных изменений
 
     }
 }
