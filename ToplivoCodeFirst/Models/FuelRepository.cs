@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Data.Entity;
 using System.Collections.Generic;
 
@@ -11,42 +12,46 @@ namespace ToplivoCodeFirst.Models
         {
             db = new ToplivoContext();
         }
-        public void Create(Fuel item)
+        public void Create(Fuel fuel)
         {
-            throw new NotImplementedException();
+            db.Fuels.Add(fuel);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Fuel fuel = db.Fuels.Find(id);
+            if (fuel!=null)
+            {
+                db.Fuels.Remove(fuel);
+            }
         }
 
         
         public IEnumerable<Fuel> Find(Func<Fuel, bool> predicate)
         {
-            throw new NotImplementedException();
+            return db.Fuels.Where(predicate).ToList();
         }
 
         public Fuel Get(int id)
         {
-            throw new NotImplementedException();
+            return db.Fuels.Find(id);
         }
 
         public IEnumerable<Fuel> GetAll()
         {
-            throw new NotImplementedException();
+            return db.Fuels;
         }
 
         public IEnumerable<Fuel> GetNumberItems(int numberItems)
         {
-            throw new NotImplementedException();
+            return db.Fuels.Take(numberItems);
         }
 
         
 
-        public void Update(Fuel item)
+        public void Update(Fuel fuel)
         {
-            throw new NotImplementedException();
+            db.Entry(fuel).State=EntityState.Modified;
         }
         public void Save()
         {
@@ -55,7 +60,7 @@ namespace ToplivoCodeFirst.Models
 
         private bool disposed = false;
 
-        public virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
             {

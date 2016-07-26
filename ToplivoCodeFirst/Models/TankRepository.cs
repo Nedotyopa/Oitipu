@@ -85,7 +85,6 @@ namespace ToplivoCodeFirst.Models
             db.Entry(tank).State = EntityState.Modified;
         }
 
-
         public void Save()
         {
             db.SaveChanges();
@@ -93,7 +92,7 @@ namespace ToplivoCodeFirst.Models
 
         private bool disposed = false;
 
-        public virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
