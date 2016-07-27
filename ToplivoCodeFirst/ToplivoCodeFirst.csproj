@@ -128,6 +128,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TanksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -201,11 +202,15 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.0.min.map" />
+    <Content Include="Views\Tanks\Create.cshtml" />
+    <Content Include="Views\Tanks\Delete.cshtml" />
+    <Content Include="Views\Tanks\Details.cshtml" />
+    <Content Include="Views\Tanks\Edit.cshtml" />
+    <Content Include="Views\Tanks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
-    <Folder Include="Views\Operation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

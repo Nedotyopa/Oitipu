@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ToplivoCodeFirst.Models.Tank>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TankType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TankWeight)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TankVolume)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TankMaterial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TankPicture)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TankType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TankWeight)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TankVolume)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TankMaterial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TankPicture)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TankID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TankID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TankID })
+        </td>
+    </tr>
+}
+
+</table>
