@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace ToplivoCodeFirst.Models
+{
     public class Operation
     {
         //ID операции
