@@ -139,7 +139,7 @@
     <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\Tank.cs" />
     <Compile Include="DAL\TankRepository.cs" />
-    <Compile Include="Models\ToplivoContext.cs" />
+    <Compile Include="DAL\ToplivoContext.cs" />
     <Compile Include="DAL\ToplivoDbInitializer.cs" />
     <Compile Include="DAL\ToplivoDbInitializer_runSQL.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
