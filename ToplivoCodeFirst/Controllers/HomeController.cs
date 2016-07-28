@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ToplivoCodeFirst.Models;
+using ToplivoCodeFirst.PL;
 
 namespace ToplivoCodeFirst.Controllers
 {
@@ -29,11 +30,11 @@ namespace ToplivoCodeFirst.Controllers
             ViewBag.NumberOperations = NumberOperations;
 
             //Получаем из БД  100 объектов Operation, при этом будут подгружаться данные из Tank и Fuel
-            IEnumerable<Operation> operations = unitOfWork.Operations.GetNumberItems(NumberOperations);
+            PagedCollection<Operation> pagedcollection = unitOfWork.Operations.GetNumberItems(1,NumberOperations);
             //OperationView operations = unitOfWork.Operations.GetAllPaged();
             // передаем все объекты в динамическое свойство Operations в ViewBag
-            ViewBag.Operations = operations;
-            //ViewBag.PageInfo = operations.PageInfo;
+            ViewBag.Operations = pagedcollection.PagedItems;
+            ViewBag.PageInfo = pagedcollection.PageInfo;
 
             return View();
         }

@@ -12,7 +12,6 @@ namespace ToplivoCodeFirst.Models
         public FuelRepository(ToplivoContext context)
         {
             db = context;
-
         }
         public void Create(Fuel fuel)
         {
@@ -27,7 +26,6 @@ namespace ToplivoCodeFirst.Models
                 db.Fuels.Remove(fuel);
             }
         }
-
         
         public IEnumerable<Fuel> Find(Func<Fuel, bool> predicate)
         {
@@ -44,12 +42,13 @@ namespace ToplivoCodeFirst.Models
             return db.Fuels;
         }
 
-        public IEnumerable<Fuel> GetNumberItems(int numberItems)
+        public PagedCollection<Fuel> GetNumberItems(int page = 1, int pageSize = 30)
         {
-            return db.Fuels.Take(numberItems);
+            IEnumerable<Fuel> fuels = db.Fuels.OrderBy(o => o.FuelID).Skip((page - 1) * pageSize).Take(pageSize);
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = fuels.Count() };
+            PagedCollection<Fuel> viewfuels = new PagedCollection<Fuel> { PageInfo = pageInfo, PagedItems = fuels };
+            return viewfuels;
         }
-
-        
 
         public void Update(Fuel fuel)
         {
@@ -80,10 +79,8 @@ namespace ToplivoCodeFirst.Models
             GC.SuppressFinalize(this);
         }
 
-        public Page<Fuel> GetAllPaged(int page = 1, int pageSize = 20)
-        {
-            throw new NotImplementedException();
-        }
+       
+ 
     }
 
 }

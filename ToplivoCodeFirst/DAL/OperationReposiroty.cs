@@ -42,29 +42,20 @@ namespace ToplivoCodeFirst.Models
         {
             return db.Operations.Include(o=>o.Fuel).Include(o=>o.Tank);
         }
-        public OperationPage GetAllPaged(int page = 1, int pageSize = 20)
-        {
-            IEnumerable<Operation> operations = db.Operations.OrderBy(o=>o.OperationID).Skip((page - 1) * pageSize).Take(pageSize).Include(o => o.Fuel).Include(o => o.Tank);
-            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = operations.Count() };
-            OperationPage viewoperations = new OperationPage { PageInfo = pageInfo, Operations = operations };
-            return viewoperations;
-        }
-        Page<Operation> IRepository<Operation>.GetAllPaged(int page, int pageSize)
+
+        public PagedCollection<Operation> GetNumberItems(int page = 1, int pageSize = 30)
         {
             IEnumerable<Operation> operations = db.Operations.OrderBy(o => o.OperationID).Skip((page - 1) * pageSize).Take(pageSize).Include(o => o.Fuel).Include(o => o.Tank);
             PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = operations.Count() };
-            Page<Operation> viewoperations = new Page<Operation> { PageInfo = pageInfo, PagedItems = operations };
+            PagedCollection<Operation> viewoperations = new PagedCollection<Operation> { PageInfo = pageInfo, PagedItems = operations };
             return viewoperations;
         }
-        public IEnumerable<Operation> GetNumberItems(int numberItems)
-        {
-            return db.Operations.Take(numberItems).Include(o => o.Fuel).Include(o => o.Tank).OrderByDescending(o=>o.Date);
-        }
-
+  
         public void Update(Operation operation)
         {
             db.Entry(operation).State=EntityState.Modified;
         }
+
         public void Save()
         {
             db.SaveChanges();
@@ -90,6 +81,5 @@ namespace ToplivoCodeFirst.Models
             GC.SuppressFinalize(this);
         }
 
-       
-    }
+     }
 }

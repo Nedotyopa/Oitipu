@@ -4,7 +4,7 @@ using ToplivoCodeFirst.Models;
 
 namespace ToplivoCodeFirst.PL
 {
-    public class Page<T>
+    public class PagedCollection<T>
     {
         public IEnumerable<T> PagedItems { get; set; }
         public PageInfo PageInfo { get; set; }

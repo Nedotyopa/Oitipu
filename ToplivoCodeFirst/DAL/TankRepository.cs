@@ -12,11 +12,8 @@ namespace ToplivoCodeFirst.Models
         private ToplivoContext db;
         public TankRepository(ToplivoContext context)
         {
-
             db = context;
         }
-
-
 
         public void Create(Tank tank)
         {
@@ -24,7 +21,6 @@ namespace ToplivoCodeFirst.Models
         }
         public string CreateWithPicture(Tank tank, HttpPostedFileBase upload)
         {
-
             string fileName = "";  
             if (upload != null)
             {
@@ -40,7 +36,6 @@ namespace ToplivoCodeFirst.Models
         }
         public string UpdateWithPicture(Tank tank, HttpPostedFileBase upload)
         {
-
             string fileName = "";  
             if (upload != null)
             {
@@ -52,7 +47,6 @@ namespace ToplivoCodeFirst.Models
             tank.TankPicture = fileName;
             Update(tank);
             return fileName;
-
         }
 
         public void Delete(int id)
@@ -79,9 +73,12 @@ namespace ToplivoCodeFirst.Models
             return db.Tanks;
         }
 
-        public IEnumerable<Tank> GetNumberItems(int numberItems)
+        public PagedCollection<Tank> GetNumberItems(int page = 1, int pageSize = 20)
         {
-            return db.Tanks.Take(numberItems);
+            IEnumerable<Tank> tanks = db.Tanks.OrderBy(o => o.TankID).Skip((page - 1) * pageSize).Take(pageSize);
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = tanks.Count() };
+            PagedCollection<Tank> viewtanks = new PagedCollection<Tank> { PageInfo = pageInfo, PagedItems = tanks };
+            return viewtanks;
         }
 
         public void Update(Tank tank)
@@ -114,9 +111,6 @@ namespace ToplivoCodeFirst.Models
             GC.SuppressFinalize(this);
         }
 
-        public Page<Tank> GetAllPaged(int page = 1, int pageSize = 20)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
