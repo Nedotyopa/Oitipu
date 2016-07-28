@@ -30,9 +30,11 @@ namespace ToplivoCodeFirst.Controllers
 
             //Получаем из БД  100 объектов Operation, при этом будут подгружаться данные из Tank и Fuel
             IEnumerable<Operation> operations = unitOfWork.Operations.GetNumberItems(NumberOperations);
-
+            //OperationView operations = unitOfWork.Operations.GetAllPaged();
             // передаем все объекты в динамическое свойство Operations в ViewBag
             ViewBag.Operations = operations;
+            //ViewBag.PageInfo = operations.PageInfo;
+
             return View();
         }
 

@@ -12,6 +12,10 @@ namespace ToplivoCodeFirst.Models
         {
             db = context;
         }
+
+
+
+
         public void Create(Operation operation)
         {
             db.Operations.Add(operation);
@@ -40,6 +44,16 @@ namespace ToplivoCodeFirst.Models
         public IEnumerable<Operation> GetAll()
         {
             return db.Operations.Include(o=>o.Fuel).Include(o=>o.Tank);
+        }
+        public OperationPage GetAllPaged(int page = 1, int pageSize = 20)
+        {
+            IEnumerable<Operation> operations = db.Operations.OrderBy(o=>o.OperationID).Skip((page - 1) * pageSize).Take(pageSize).Include(o => o.Fuel).Include(o => o.Tank);
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = operations.Count() };
+            OperationPage viewoperations = new OperationPage { PageInfo = pageInfo, Operations = operations };
+
+
+
+            return viewoperations;
         }
 
         public IEnumerable<Operation> GetNumberItems(int numberItems)
