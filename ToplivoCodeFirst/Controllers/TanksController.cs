@@ -19,7 +19,6 @@ namespace ToplivoCodeFirst.Controllers
             unitOfWork = new UnitOfWork();
 
         }
-        //private ToplivoContext db = new ToplivoContext();
 
         // GET: Tanks
         public ActionResult Index()
