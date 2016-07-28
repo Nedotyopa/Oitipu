@@ -3,7 +3,6 @@ using System.Linq;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Web;
-using ToplivoCodeFirst.PL;
 
 namespace ToplivoCodeFirst.Models
 {

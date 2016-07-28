@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace ToplivoCodeFirst.PL
+namespace ToplivoCodeFirst.Models
 {
     public class PagedCollection<T>
     {

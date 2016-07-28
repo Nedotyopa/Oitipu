@@ -1,5 +1,5 @@
-﻿@model IEnumerable<ToplivoCodeFirst.Models.Tank>
-
+﻿@model ToplivoCodeFirst.Models.PagedCollection<Tank>
+@using ToplivoCodeFirst.Models
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,27 +10,26 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.TankType)
+            @Html.DisplayNameFor(model => model.PagedItems.Select(t=>t.TankType))
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TankWeight)
+            @Html.DisplayNameFor(model => model.PagedItems.Select(t => t.TankWeight))
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TankVolume)
+            @Html.DisplayNameFor(model => model.PagedItems.Select(t => t.TankVolume))
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TankMaterial)
+            @Html.DisplayNameFor(model => model.PagedItems.Select(t => t.TankMaterial))
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TankPicture)
-        </th>
+        
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.PagedItems) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.TankType)
@@ -44,9 +43,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.TankMaterial)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TankPicture)
-        </td>
+        
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TankID }) |
             @Html.ActionLink("Details", "Details", new { id=item.TankID }) |

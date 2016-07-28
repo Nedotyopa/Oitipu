@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ToplivoCodeFirst.PL
+namespace ToplivoCodeFirst.Models
 {
     public class PageInfo
     {

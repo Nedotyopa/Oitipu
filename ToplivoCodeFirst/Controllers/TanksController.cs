@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ToplivoCodeFirst.Models;
-using ToplivoCodeFirst.PL;
 
 namespace ToplivoCodeFirst.Controllers
 {
@@ -36,7 +35,7 @@ namespace ToplivoCodeFirst.Controllers
 
 
 
-            return View(pagedcollection.PagedItems);
+            return View(pagedcollection);
         }
 
         // GET: Tanks/Details/5
