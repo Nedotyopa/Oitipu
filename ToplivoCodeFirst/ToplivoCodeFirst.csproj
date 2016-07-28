@@ -138,7 +138,6 @@
     <Compile Include="Models\Operation.cs" />
     <Compile Include="DAL\OperationReposiroty.cs" />
     <Compile Include="PL\PagedCollection.cs" />
-    <Compile Include="PL\OperationPage.cs" />
     <Compile Include="Models\Tank.cs" />
     <Compile Include="DAL\TankRepository.cs" />
     <Compile Include="DAL\ToplivoContext.cs" />
@@ -146,7 +145,6 @@
     <Compile Include="DAL\ToplivoDbInitializer_runSQL.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="PL\PageInfo.cs" />
-    <Compile Include="PL\TankPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
