@@ -137,7 +137,7 @@
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="Models\Operation.cs" />
     <Compile Include="DAL\OperationReposiroty.cs" />
-    <Compile Include="PL\FuelPage.cs" />
+    <Compile Include="PL\Page.cs" />
     <Compile Include="PL\OperationPage.cs" />
     <Compile Include="Models\Tank.cs" />
     <Compile Include="DAL\TankRepository.cs" />

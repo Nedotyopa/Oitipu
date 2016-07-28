@@ -3,6 +3,7 @@ using System.Linq;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Web;
+using ToplivoCodeFirst.PL;
 
 namespace ToplivoCodeFirst.Models
 {
@@ -113,5 +114,9 @@ namespace ToplivoCodeFirst.Models
             GC.SuppressFinalize(this);
         }
 
+        public Page<Tank> GetAllPaged(int page = 1, int pageSize = 20)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

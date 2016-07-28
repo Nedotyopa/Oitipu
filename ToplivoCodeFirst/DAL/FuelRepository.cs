@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Data.Entity;
 using System.Collections.Generic;
+using ToplivoCodeFirst.PL;
 
 namespace ToplivoCodeFirst.Models
 {
@@ -77,6 +78,11 @@ namespace ToplivoCodeFirst.Models
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public Page<Fuel> GetAllPaged(int page = 1, int pageSize = 20)
+        {
+            throw new NotImplementedException();
         }
     }
 

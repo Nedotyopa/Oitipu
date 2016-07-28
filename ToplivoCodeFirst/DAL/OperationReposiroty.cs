@@ -49,7 +49,13 @@ namespace ToplivoCodeFirst.Models
             OperationPage viewoperations = new OperationPage { PageInfo = pageInfo, Operations = operations };
             return viewoperations;
         }
-
+        Page<Operation> IRepository<Operation>.GetAllPaged(int page, int pageSize)
+        {
+            IEnumerable<Operation> operations = db.Operations.OrderBy(o => o.OperationID).Skip((page - 1) * pageSize).Take(pageSize).Include(o => o.Fuel).Include(o => o.Tank);
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = operations.Count() };
+            Page<Operation> viewoperations = new Page<Operation> { PageInfo = pageInfo, PagedItems = operations };
+            return viewoperations;
+        }
         public IEnumerable<Operation> GetNumberItems(int numberItems)
         {
             return db.Operations.Take(numberItems).Include(o => o.Fuel).Include(o => o.Tank).OrderByDescending(o=>o.Date);
@@ -83,5 +89,7 @@ namespace ToplivoCodeFirst.Models
             Dispose(true);
             GC.SuppressFinalize(this);
         }
- }
+
+       
+    }
 }

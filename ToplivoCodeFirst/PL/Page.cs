@@ -4,9 +4,9 @@ using ToplivoCodeFirst.Models;
 
 namespace ToplivoCodeFirst.PL
 {
-    public class FuelPage
+    public class Page<T>
     {
-        public IEnumerable<Fuel> Fuels { get; set; }
+        public IEnumerable<T> PagedItems { get; set; }
         public PageInfo PageInfo { get; set; }
     }
 }
