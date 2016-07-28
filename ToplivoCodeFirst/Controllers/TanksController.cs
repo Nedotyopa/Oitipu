@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ToplivoCodeFirst.Models;
+using ToplivoCodeFirst.PL;
 
 namespace ToplivoCodeFirst.Controllers
 {
@@ -21,9 +22,21 @@ namespace ToplivoCodeFirst.Controllers
         }
 
         // GET: Tanks
-        public ActionResult Index()
+        public ActionResult Index(int page=1, int pagesize=20)
         {
-            return View(unitOfWork.Tanks.GetAll());
+
+            
+            ViewBag.NumberOperations = pagesize;
+
+            //Получаем из БД  100 объектов Operation, при этом будут подгружаться данные из Tank и Fuel
+            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(page, pagesize);
+            // передаем все объекты в динамическое свойство Operations в ViewBag
+            ViewBag.Operations = pagedcollection.PagedItems;
+            ViewBag.PageInfo = pagedcollection.PageInfo;
+
+
+
+            return View(pagedcollection.PagedItems);
         }
 
         // GET: Tanks/Details/5

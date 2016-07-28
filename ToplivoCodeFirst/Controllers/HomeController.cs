@@ -21,17 +21,12 @@ namespace ToplivoCodeFirst.Controllers
         }
 
 
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int pagesize = 20)
         {
-
-            int NumberOperations = 100;//Количество записей на главной странице
-            // передаем значение количества объектов в динамическое свойство NumberOperations
-
-            ViewBag.NumberOperations = NumberOperations;
-
-            //Получаем из БД  100 объектов Operation, при этом будут подгружаться данные из Tank и Fuel
-            PagedCollection<Operation> pagedcollection = unitOfWork.Operations.GetNumberItems(1,NumberOperations);
-            //OperationView operations = unitOfWork.Operations.GetAllPaged();
+  
+            ViewBag.NumberOperations = pagesize;
+            //Получаем из БД  pagesize объектов Operation, при этом будут подгружаться данные из Tank и Fuel
+            PagedCollection<Operation> pagedcollection = unitOfWork.Operations.GetNumberItems(page, pagesize);
             // передаем все объекты в динамическое свойство Operations в ViewBag
             ViewBag.Operations = pagedcollection.PagedItems;
             ViewBag.PageInfo = pagedcollection.PageInfo;
