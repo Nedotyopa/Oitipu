@@ -34,7 +34,7 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tank tank = unitOfWork.Tanks.Get((int)id);
+            Tank tank = unitOfWork.Tanks.Get((int)id).;
             if (tank == null)
             {
                 return HttpNotFound();

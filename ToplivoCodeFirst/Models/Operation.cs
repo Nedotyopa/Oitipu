@@ -18,6 +18,7 @@ namespace ToplivoCodeFirst.Models
         public float? Inc_Exp { get; set; }
         //Дата операции
         [Display(Name = "Дата операции")]
+        [DataType(DataType.Date)]
         public System.DateTime Date { get; set; }
         //ссылка на виды топлива
         public virtual Fuel Fuel { get; set; }

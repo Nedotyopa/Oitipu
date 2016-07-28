@@ -11,8 +11,11 @@ namespace ToplivoCodeFirst.Models
         private ToplivoContext db;
         public TankRepository(ToplivoContext context)
         {
+
             db = context;
         }
+
+
 
         public void Create(Tank tank)
         {
