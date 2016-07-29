@@ -54,5 +54,5 @@
 </div>
 <p>
     @Html.ActionLink("Редактировать", "Edit", new { id = Model.TankID }) 
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Возврат", "Details", new { id= Model.TankID, indexredirect=true})
 </p>
