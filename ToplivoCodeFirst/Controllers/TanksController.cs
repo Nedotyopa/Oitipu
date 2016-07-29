@@ -13,20 +13,23 @@ namespace ToplivoCodeFirst.Controllers
     public class TanksController : Controller
     {
         UnitOfWork unitOfWork;
+        PageInfo pageinfo;
         public TanksController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
-
+            pageinfo = new PageInfo { PageNumber=1, PageSize=20, TotalItems=0};
         }
 
         // GET: Tanks
-        public ActionResult Index(int page=1, int pagesize=10)
+        public ActionResult Index(int page=1)
         {
                        
 
-            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(page, pagesize);
-        
+            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(page, pageinfo.PageSize);
+            pageinfo.PageNumber = page;
+            pageinfo.PageSize = pagedcollection.PageInfo.TotalItems;
+
 
 
 

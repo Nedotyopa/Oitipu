@@ -12,19 +12,20 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
+
 <table class="table">
     <tr>
         <th>
-           Название емкости
+            @Html.DisplayNameFor(model => model.PagedItems.FirstOrDefault().TankType)
         </th>
         <th>
-           Вес
+            @Html.DisplayNameFor(model => model.PagedItems.FirstOrDefault().TankWeight)
         </th>
         <th>
-           Объем
+            @Html.DisplayNameFor(model => model.PagedItems.FirstOrDefault().TankVolume)
         </th>
         <th>
-           Материал
+            @Html.DisplayNameFor(model => model.PagedItems.FirstOrDefault().TankMaterial)
         </th>
 
         <th></th>
@@ -47,7 +48,7 @@
         </td>
         
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TankID }) |
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.TankID }) |
             @Html.ActionLink("Details", "Details", new { id=item.TankID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.TankID })
         </td>
