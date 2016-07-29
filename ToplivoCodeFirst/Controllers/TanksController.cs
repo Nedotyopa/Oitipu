@@ -37,13 +37,14 @@ namespace ToplivoCodeFirst.Controllers
         }
 
         // GET: Tanks/Details/5
-        public ActionResult Details(int? id, bool indexredirect=false)
+        public ActionResult Details(int? id)
         {
-            if (indexredirect) return View(Index(pageinfo.PageNumber));
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            if (id == -1) return Index(pageinfo.PageNumber);
+
             Tank tank = unitOfWork.Tanks.Get((int)id);
             if (tank == null)
             {
