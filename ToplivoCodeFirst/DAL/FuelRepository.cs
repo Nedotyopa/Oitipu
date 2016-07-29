@@ -43,8 +43,9 @@ namespace ToplivoCodeFirst.Models
 
         public PagedCollection<Fuel> GetNumberItems(int page = 1, int pageSize = 30)
         {
+            int totalitems = db.Fuels.Count();
             IEnumerable<Fuel> fuels = db.Fuels.OrderBy(o => o.FuelID).Skip((page - 1) * pageSize).Take(pageSize);
-            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = fuels.Count() };
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = totalitems };
             PagedCollection<Fuel> viewfuels = new PagedCollection<Fuel> { PageInfo = pageInfo, PagedItems = fuels };
             return viewfuels;
         }

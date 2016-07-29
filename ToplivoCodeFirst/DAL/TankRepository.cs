@@ -74,8 +74,9 @@ namespace ToplivoCodeFirst.Models
 
         public PagedCollection<Tank> GetNumberItems(int page = 1, int pageSize = 20)
         {
-            IEnumerable<Tank> tanks = db.Tanks.OrderBy(o => o.TankID).Skip((page - 1) * pageSize).Take(pageSize);
-            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = tanks.Count() };
+            int totalitems = db.Tanks.Count();
+            IEnumerable <Tank> tanks = db.Tanks.OrderBy(o => o.TankID).Skip((page - 1) * pageSize).Take(pageSize);
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = totalitems };
             PagedCollection<Tank> viewtanks = new PagedCollection<Tank> { PageInfo = pageInfo, PagedItems = tanks };
             return viewtanks;
         }

@@ -1,14 +1,14 @@
-﻿using Antlr.Runtime.Misc;
-using System.Text;
+﻿using System.Text;
 using System.Web.Mvc;
-using ToplivoCodeFirst.Model;
+using ToplivoCodeFirst.Models;
 
 namespace ToplivoCodeFirst.Helpers
 {
-    public static class PagingHelpers
+    //.............................
+    public static class PagingHelper
     {
         public static MvcHtmlString PageLinks(this HtmlHelper html,
-        PageInfo pageInfo, Func<int, string> pageUrl)
+            PageInfo pageInfo, System.Func<int, string> pageUrl)
         {
             StringBuilder result = new StringBuilder();
             for (int i = 1; i <= pageInfo.TotalPages; i++)

@@ -132,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PagingHelper.cs" />
     <Compile Include="Models\Fuel.cs" />
     <Compile Include="DAL\FuelRepository.cs" />
     <Compile Include="DAL\IRepository.cs" />

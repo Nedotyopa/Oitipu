@@ -1,5 +1,6 @@
 ﻿@model ToplivoCodeFirst.Models.PagedCollection<Tank>
 @using ToplivoCodeFirst.Models
+@using ToplivoCodeFirst.Helpers
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,20 +15,21 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.PagedItems.Select(t=>t.TankType))
+           Название емкости
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PagedItems.Select(t => t.TankWeight))
+           Вес
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PagedItems.Select(t => t.TankVolume))
+           Объем
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PagedItems.Select(t => t.TankMaterial))
+           Материал
         </th>
-        
+
         <th></th>
     </tr>
+   
 
 @foreach (var item in Model.PagedItems) {
     <tr>
@@ -51,5 +53,8 @@
         </td>
     </tr>
 }
-
+    
 </table>
+<div class="btn-group">
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
+</div>
