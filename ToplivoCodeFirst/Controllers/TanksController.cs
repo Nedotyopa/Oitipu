@@ -13,26 +13,19 @@ namespace ToplivoCodeFirst.Controllers
     public class TanksController : Controller
     {
         UnitOfWork unitOfWork;
-        PageInfo pageinfo;
+        public PageInfo pageinfo = new PageInfo { PageNumber=1, PageSize=20, TotalItems=0};
         public TanksController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
-            pageinfo = new PageInfo { PageNumber=1, PageSize=20, TotalItems=0};
         }
 
         // GET: Tanks
         public ActionResult Index(int page=1)
         {
-                       
-
             PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(page, pageinfo.PageSize);
             pageinfo.PageNumber = page;
             pageinfo.PageSize = pagedcollection.PageInfo.TotalItems;
-
-
-
-
             return View(pagedcollection);
         }
 
@@ -43,7 +36,11 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (id == -1) return Index(pageinfo.PageNumber);
+            if (id == -1)
+            {
+                PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(pageinfo.PageNumber, pageinfo.PageSize);
+                return View("Index", pagedcollection);
+             };
 
             Tank tank = unitOfWork.Tanks.Get((int)id);
             if (tank == null)
@@ -69,7 +66,6 @@ namespace ToplivoCodeFirst.Controllers
             if (ModelState.IsValid)
             {
                 unitOfWork.Tanks.Create(tank);
-
                 unitOfWork.Tanks.Save();
                 return RedirectToAction("Index");
             }
