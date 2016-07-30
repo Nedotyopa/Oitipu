@@ -24,7 +24,6 @@ namespace ToplivoCodeFirst.Controllers
             pageinfo.PageNumber = page; pageinfo.PageSize = pagedcollection.PageInfo.TotalItems;
             Session["TankPage"] = page;
             Session["strTankTypeFind"] = strTankTypeFind;
-
             return View(pagedcollection);
         }
 
@@ -77,7 +76,6 @@ namespace ToplivoCodeFirst.Controllers
             }
 
             if (id == -1) return RedirectToIndex();
-
 
             Tank tank = unitOfWork.Tanks.Get((int)id);
             if (tank == null)
@@ -134,11 +132,8 @@ namespace ToplivoCodeFirst.Controllers
         {
             int page = (int)Session["TankPage"];
             string strTankTypeFind=(string)Session["strTankTypeFind"];
-
             PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t => (t.TankType.Contains(strTankTypeFind)),page, pageinfo.PageSize);
             return View("Index", pagedcollection);
-
-
         }
 
         protected override void Dispose(bool disposing)

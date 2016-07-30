@@ -1,5 +1,6 @@
-﻿@model IEnumerable<ToplivoCodeFirst.Models.Fuel>
-
+﻿@model ToplivoCodeFirst.Models.PagedCollection<Fuel>
+@using ToplivoCodeFirst.Models
+@using ToplivoCodeFirst.Helpers
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,20 +9,28 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создать новый вид", "Create")
 </p>
+@using (Html.BeginForm("Index", "Fuels", FormMethod.Get))
+{
+<fieldset>
+    Наименование емкости: @Html.TextBox("strFuelTypeFind", (string)Session["strFuelTypeFind"])
+    <input type="submit" value="Найти" />
+</fieldset>
+}
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FuelType)
+            @Html.DisplayNameFor(model => model.PagedItems.FirstOrDefault().FuelType)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FuelDensity)
+            @Html.DisplayNameFor(model => model.PagedItems.FirstOrDefault().FuelDensity)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.PagedItems) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.FuelType)
@@ -38,3 +47,8 @@
 }
 
 </table>
+
+<div class="btn-group">
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x, strTankTypeFind = Session["strTankTypeFind"] }))
+</div>
+

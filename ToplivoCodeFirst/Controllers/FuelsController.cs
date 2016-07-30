@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using ToplivoCodeFirst.Models;
 
@@ -8,12 +9,24 @@ namespace ToplivoCodeFirst.Controllers
 {
     public class FuelsController : Controller
     {
-        private ToplivoContext db = new ToplivoContext();
-
-        // GET: Fuels
-        public ActionResult Index()
+        UnitOfWork unitOfWork;
+        public PageInfo pageinfo;
+        
+        public FuelsController()
         {
-            return View(db.Fuels.ToList());
+            // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
+            unitOfWork = new UnitOfWork();
+            int page = 1;
+            pageinfo = new PageInfo { PageNumber = page, PageSize = 20, TotalItems = 0 };
+        }
+        // GET: Fuels
+        public ActionResult Index(int page = 1, string strFuelTypeFind = "")
+        {
+            PagedCollection<Fuel> pagedcollection = unitOfWork.Fuels.GetNumberItems(t => (t.FuelType.Contains(strFuelTypeFind)), page, pageinfo.PageSize);
+            pageinfo.PageNumber = page; pageinfo.PageSize = pagedcollection.PageInfo.TotalItems;
+            Session["FuelPage"] = page;
+            Session["strFuelTypeFind"] = strFuelTypeFind;
+            return View(pagedcollection);
         }
 
         // GET: Fuels/Details/5
@@ -23,7 +36,7 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fuel fuel = db.Fuels.Find(id);
+            Fuel fuel = unitOfWork.Fuels.Get((int)id);
             if (fuel == null)
             {
                 return HttpNotFound();
@@ -42,16 +55,17 @@ namespace ToplivoCodeFirst.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FuelID,FuelType,FuelDensity")] Fuel fuel)
+        public ActionResult Create(Fuel fuel, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
-                db.Fuels.Add(fuel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                unitOfWork.Fuels.Create(fuel);
+                unitOfWork.Fuels.Save();
+                return RedirectToAction("Edit", new { id = fuel.FuelID });
             }
 
             return View(fuel);
+
         }
 
         // GET: Fuels/Edit/5
@@ -61,12 +75,15 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fuel fuel = db.Fuels.Find(id);
-            if (fuel == null)
+
+            if (id == -1) return RedirectToIndex();
+
+            Fuel fuels = unitOfWork.Fuels.Get((int)id);
+            if (fuels == null)
             {
                 return HttpNotFound();
             }
-            return View(fuel);
+            return View(fuels);
         }
 
         // POST: Fuels/Edit/5
@@ -74,13 +91,13 @@ namespace ToplivoCodeFirst.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FuelID,FuelType,FuelDensity")] Fuel fuel)
+        public ActionResult Edit( Fuel fuel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(fuel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                unitOfWork.Fuels.Update(fuel);
+                unitOfWork.Fuels.Save();
+                return RedirectToAction("Edit", new { id = fuel.FuelID });
             }
             return View(fuel);
         }
@@ -92,7 +109,7 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fuel fuel = db.Fuels.Find(id);
+            Fuel fuel = unitOfWork.Fuels.Get((int)id);
             if (fuel == null)
             {
                 return HttpNotFound();
@@ -105,17 +122,25 @@ namespace ToplivoCodeFirst.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Fuel fuel = db.Fuels.Find(id);
-            db.Fuels.Remove(fuel);
-            db.SaveChanges();
+            unitOfWork.Fuels.Delete(id);
+            unitOfWork.Fuels.Save();
             return RedirectToAction("Index");
         }
+        
+        public ActionResult RedirectToIndex()
+        {
+            int page = (int)Session["FuelPage"];
+            string strFuelTypeFind = (string)Session["strFuelTypeFind"];
+            PagedCollection<Fuel> pagedcollection = unitOfWork.Fuels.GetNumberItems(t => (t.FuelType.Contains(strFuelTypeFind)), page, pageinfo.PageSize);
+            return View("Index", pagedcollection);
+        }
+
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
