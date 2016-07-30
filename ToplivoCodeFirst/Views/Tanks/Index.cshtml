@@ -11,7 +11,13 @@
 <p>
     @Html.ActionLink("Добавить новую", "Create")
 </p>
-
+@using (Html.BeginForm("Index", "Tanks", FormMethod.Get))
+{ 
+   <fieldset>
+        Наименование емкости: @Html.TextBox("strTankTypeFind", (string)Session["strTankTypeFind"])
+        <input type="submit" value="Найти" />
+    </fieldset>
+}
 
 <table class="table">
     <tr>
@@ -57,5 +63,5 @@
     
 </table>
 <div class="btn-group">
-    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x, strTankTypeFind= Session["strTankTypeFind"] }))
 </div>

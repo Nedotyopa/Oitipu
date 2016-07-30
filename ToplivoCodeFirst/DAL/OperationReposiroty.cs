@@ -42,10 +42,11 @@ namespace ToplivoCodeFirst.Models
             return db.Operations.Include(o=>o.Fuel).Include(o=>o.Tank);
         }
 
-        public PagedCollection<Operation> GetNumberItems(int page = 1, int pageSize = 30)
+        public PagedCollection<Operation> GetNumberItems(Func<Operation, bool> predicate, int page = 1, int pageSize = 30)
         {
-            int totalitems = db.Operations.Count();
-            IEnumerable<Operation> operations = db.Operations.OrderBy(o => o.OperationID).Skip((page - 1) * pageSize).Take(pageSize).Include(o => o.Fuel).Include(o => o.Tank);
+
+            int totalitems = db.Operations.Where(predicate).Count();
+            IEnumerable<Operation> operations = db.Operations.OrderBy(o => o.OperationID).Skip((page - 1) * pageSize).Take(pageSize).Include(o => o.Fuel).Include(o => o.Tank).Where(predicate);
             PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = totalitems };
             PagedCollection<Operation> viewoperations = new PagedCollection<Operation> { PageInfo = pageInfo, PagedItems = operations };
             return viewoperations;

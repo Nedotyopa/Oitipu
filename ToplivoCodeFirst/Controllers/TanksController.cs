@@ -18,11 +18,13 @@ namespace ToplivoCodeFirst.Controllers
         }
 
         // GET: Tanks
-        public ActionResult Index(int page=1)
+        public ActionResult Index(int page=1, string strTankTypeFind = "")
         {
-            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(page, pageinfo.PageSize);
+            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t=>(t.TankType.Contains(strTankTypeFind)),page, pageinfo.PageSize);
             pageinfo.PageNumber = page; pageinfo.PageSize = pagedcollection.PageInfo.TotalItems;
             Session["TankPage"] = page;
+            Session["strTankTypeFind"] = strTankTypeFind;
+
             return View(pagedcollection);
         }
 
@@ -33,12 +35,7 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (id == -1)
-            {
-                int page =(int) Session["TankPage"];
-                PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(page, pageinfo.PageSize);
-                return View("Index", pagedcollection);
-             };
+            if (id == -1) return RedirectToIndex();
 
             Tank tank = unitOfWork.Tanks.Get((int)id);
             if (tank == null)
@@ -79,12 +76,8 @@ namespace ToplivoCodeFirst.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (id == -1)
-            {
-                int page = (int)Session["TankPage"];
-                PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(page, pageinfo.PageSize);
-                return View("Index", pagedcollection);
-            };
+            if (id == -1) return RedirectToIndex();
+
 
             Tank tank = unitOfWork.Tanks.Get((int)id);
             if (tank == null)
@@ -134,6 +127,18 @@ namespace ToplivoCodeFirst.Controllers
             unitOfWork.Tanks.Delete(id);
             unitOfWork.Tanks.Save();
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult RedirectToIndex()
+        {
+            int page = (int)Session["TankPage"];
+            string strTankTypeFind=(string)Session["strTankTypeFind"];
+
+            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t => (t.TankType.Contains(strTankTypeFind)),page, pageinfo.PageSize);
+            return View("Index", pagedcollection);
+
+
         }
 
         protected override void Dispose(bool disposing)
