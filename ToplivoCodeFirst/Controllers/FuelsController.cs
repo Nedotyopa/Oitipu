@@ -6,116 +6,107 @@ using ToplivoCodeFirst.Models;
 
 namespace ToplivoCodeFirst.Controllers
 {
-    public class OperationsController : Controller
+    public class FuelsController : Controller
     {
         private ToplivoContext db = new ToplivoContext();
 
-        // GET: Operations
+        // GET: Fuels
         public ActionResult Index()
         {
-            var operations = db.Operations.Include(o => o.Fuel).Include(o => o.Tank);
-            return View(operations.ToList());
+            return View(db.Fuels.ToList());
         }
 
-        // GET: Operations/Details/5
+        // GET: Fuels/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Operation operation = db.Operations.Find(id);
-            if (operation == null)
+            Fuel fuel = db.Fuels.Find(id);
+            if (fuel == null)
             {
                 return HttpNotFound();
             }
-            return View(operation);
+            return View(fuel);
         }
 
-        // GET: Operations/Create
+        // GET: Fuels/Create
         public ActionResult Create()
         {
-            ViewBag.FuelID = new SelectList(db.Fuels, "FuelID", "FuelType");
-            ViewBag.TankID = new SelectList(db.Tanks, "TankID", "TankType");
             return View();
         }
 
-        // POST: Operations/Create
+        // POST: Fuels/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OperationID,FuelID,TankID,Inc_Exp,Date")] Operation operation)
+        public ActionResult Create([Bind(Include = "FuelID,FuelType,FuelDensity")] Fuel fuel)
         {
             if (ModelState.IsValid)
             {
-                db.Operations.Add(operation);
+                db.Fuels.Add(fuel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.FuelID = new SelectList(db.Fuels, "FuelID", "FuelType", operation.FuelID);
-            ViewBag.TankID = new SelectList(db.Tanks, "TankID", "TankType", operation.TankID);
-            return View(operation);
+            return View(fuel);
         }
 
-        // GET: Operations/Edit/5
+        // GET: Fuels/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Operation operation = db.Operations.Find(id);
-            if (operation == null)
+            Fuel fuel = db.Fuels.Find(id);
+            if (fuel == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.FuelID = new SelectList(db.Fuels, "FuelID", "FuelType", operation.FuelID);
-            ViewBag.TankID = new SelectList(db.Tanks, "TankID", "TankType", operation.TankID);
-            return View(operation);
+            return View(fuel);
         }
 
-        // POST: Operations/Edit/5
+        // POST: Fuels/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OperationID,FuelID,TankID,Inc_Exp,Date")] Operation operation)
+        public ActionResult Edit([Bind(Include = "FuelID,FuelType,FuelDensity")] Fuel fuel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(operation).State = EntityState.Modified;
+                db.Entry(fuel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.FuelID = new SelectList(db.Fuels, "FuelID", "FuelType", operation.FuelID);
-            ViewBag.TankID = new SelectList(db.Tanks, "TankID", "TankType", operation.TankID);
-            return View(operation);
+            return View(fuel);
         }
 
-        // GET: Operations/Delete/5
+        // GET: Fuels/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Operation operation = db.Operations.Find(id);
-            if (operation == null)
+            Fuel fuel = db.Fuels.Find(id);
+            if (fuel == null)
             {
                 return HttpNotFound();
             }
-            return View(operation);
+            return View(fuel);
         }
 
-        // POST: Operations/Delete/5
+        // POST: Fuels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Operation operation = db.Operations.Find(id);
-            db.Operations.Remove(operation);
+            Fuel fuel = db.Fuels.Find(id);
+            db.Fuels.Remove(fuel);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

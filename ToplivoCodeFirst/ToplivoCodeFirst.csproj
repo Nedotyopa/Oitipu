@@ -127,7 +127,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\FuelsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OperationsController.cs" />
     <Compile Include="Controllers\TanksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -209,6 +211,16 @@
     <Content Include="Views\Tanks\Details.cshtml" />
     <Content Include="Views\Tanks\Edit.cshtml" />
     <Content Include="Views\Tanks\Index.cshtml" />
+    <Content Include="Views\Fuels\Create.cshtml" />
+    <Content Include="Views\Fuels\Delete.cshtml" />
+    <Content Include="Views\Fuels\Details.cshtml" />
+    <Content Include="Views\Fuels\Edit.cshtml" />
+    <Content Include="Views\Fuels\Index.cshtml" />
+    <Content Include="Views\Operations\Create.cshtml" />
+    <Content Include="Views\Operations\Delete.cshtml" />
+    <Content Include="Views\Operations\Details.cshtml" />
+    <Content Include="Views\Operations\Edit.cshtml" />
+    <Content Include="Views\Operations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
