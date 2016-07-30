@@ -6,10 +6,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Емкости топливной базы</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить новую", "Create")
 </p>
 
 
@@ -48,9 +48,9 @@
         </td>
         
         <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id=item.TankID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TankID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TankID })
+            @Html.ActionLink("Подробнее", "Details", new { id = item.TankID })
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.TankID })
+            @Html.ActionLink("Удалить", "Delete", new { id=item.TankID })
         </td>
     </tr>
 }

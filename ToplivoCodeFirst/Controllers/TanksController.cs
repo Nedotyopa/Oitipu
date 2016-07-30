@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Net;
 using System.Web.Mvc;
 using ToplivoCodeFirst.Models;
 
@@ -13,19 +7,21 @@ namespace ToplivoCodeFirst.Controllers
     public class TanksController : Controller
     {
         UnitOfWork unitOfWork;
-        public PageInfo pageinfo = new PageInfo { PageNumber=1, PageSize=20, TotalItems=0};
+        public PageInfo pageinfo;
         public TanksController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
+            int page = 1;
+            pageinfo = new PageInfo { PageNumber = page, PageSize = 20, TotalItems = 0 };
         }
 
         // GET: Tanks
         public ActionResult Index(int page=1)
         {
             PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(page, pageinfo.PageSize);
-            pageinfo.PageNumber = page;
-            pageinfo.PageSize = pagedcollection.PageInfo.TotalItems;
+            pageinfo.PageNumber = page; pageinfo.PageSize = pagedcollection.PageInfo.TotalItems;
+            Session["TankPage"] = page;
             return View(pagedcollection);
         }
 
@@ -38,7 +34,8 @@ namespace ToplivoCodeFirst.Controllers
             }
             if (id == -1)
             {
-                PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(pageinfo.PageNumber, pageinfo.PageSize);
+                int page =(int) Session["TankPage"];
+                PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(page, pageinfo.PageSize);
                 return View("Index", pagedcollection);
              };
 
@@ -80,6 +77,14 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            if (id == -1)
+            {
+                int page = (int)Session["TankPage"];
+                PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(page, pageinfo.PageSize);
+                return View("Index", pagedcollection);
+            };
+
             Tank tank = unitOfWork.Tanks.Get((int)id);
             if (tank == null)
             {

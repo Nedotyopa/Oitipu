@@ -3,7 +3,7 @@ using System.Data.Entity;
 
 namespace ToplivoCodeFirst.Models
 {
-    public class ToplivoDbInitializer : DropCreateDatabaseAlways<ToplivoContext>
+    public class ToplivoDbInitializer : CreateDatabaseIfNotExists<ToplivoContext>
     {
         protected override void Seed(ToplivoContext db)
         {

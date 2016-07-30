@@ -1,22 +1,26 @@
 ﻿@model ToplivoCodeFirst.Models.Tank
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Емкость редактирование";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Редактировать параметры емкости</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Tanks", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+    <img src="~/Images/@Model.TankPicture" alt="фотография отсутсвует" width="250" height="250">
+    <input type="file" name="upload" /><br>
+
     <div class="form-horizontal">
-        <h4>Tank</h4>
+        <h4>Емкость</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.TankID)
+        @Html.HiddenFor(model => model.TankPicture)
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.TankType, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -50,14 +54,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TankPicture, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TankPicture, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TankPicture, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
@@ -67,9 +64,20 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Возврат", "Edit", new { id = -1 })
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+    <script type="text/javascript">
+        // переопределение валидации на стороне клиента
+        $.validator.methods.range = function (value, element, param) {
+            var globalizedValue = value.replace(",", ".");
+            return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+        }
+
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        }
+    </script>
+    }

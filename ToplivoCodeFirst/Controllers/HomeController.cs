@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using ToplivoCodeFirst.Models;
 
 namespace ToplivoCodeFirst.Controllers
@@ -16,7 +11,6 @@ namespace ToplivoCodeFirst.Controllers
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
-            
         }
 
 
