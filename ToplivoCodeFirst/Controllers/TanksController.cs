@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using ToplivoCodeFirst.Models;
 
@@ -58,13 +59,13 @@ namespace ToplivoCodeFirst.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TankID,TankType,TankWeight,TankVolume,TankMaterial,TankPicture")] Tank tank)
+        public ActionResult Create(Tank tank, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.Tanks.Create(tank);
+                string filename=unitOfWork.Tanks.CreateWithPicture(tank, upload);
                 unitOfWork.Tanks.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { id = tank.TankID });
             }
 
             return View(tank);
@@ -98,13 +99,13 @@ namespace ToplivoCodeFirst.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TankID,TankType,TankWeight,TankVolume,TankMaterial,TankPicture")] Tank tank)
+        public ActionResult Edit(Tank tank, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.Tanks.Update(tank);
+                string filename = unitOfWork.Tanks.UpdateWithPicture(tank,upload);
                 unitOfWork.Tanks.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { id = tank.TankID });
             }
             return View(tank);
         }
