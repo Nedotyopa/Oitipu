@@ -1,5 +1,5 @@
-﻿@model IEnumerable<ToplivoCodeFirst.Models.Operation>
-
+﻿@model PagedList.IPagedList<ToplivoCodeFirst.Models.Operation>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,21 +8,30 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Зарегестрировать новую операцию", "Create")
 </p>
+@using (Html.BeginForm("Index", "Fuels", FormMethod.Get))
+{
+    <fieldset>
+        Наименование емкости: @Html.TextBox("strFuelTypeFind", (string)Session["strFuelTypeFind"])
+        <input type="submit" value="Найти" />
+        Наименование топлива: @Html.TextBox("strTankTypeFind", (string)Session["strTankTypeFind"])
+        <input type="submit" value="Найти" />
+    </fieldset>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Fuel.FuelType)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Fuel.FuelType)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tank.TankType)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Tank.TankType)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Inc_Exp)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Inc_Exp)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Date)
         </th>
         <th></th>
     </tr>
@@ -50,3 +59,6 @@
 }
 
 </table>
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

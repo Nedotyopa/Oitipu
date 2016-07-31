@@ -3,51 +3,58 @@ using System.Data.Entity;
 
 namespace ToplivoCodeFirst.Models
 {
-    public class ToplivoDbInitializer : CreateDatabaseIfNotExists<ToplivoContext>
+    public class ToplivoDbInitializer : DropCreateDatabaseAlways<ToplivoContext>
     {
         protected override void Seed(ToplivoContext db)
         {
             int tanks_number = 100;
             int fuels_number = 10;
-            int operations_number = 10;
+            int operations_number = 300;
+            string tankType;
+            string tankMaterial;
+            float tankWeight;
+            float tankVolume;
+            string fuelType;
+            float fuelDensity;
+
+
+            Random randObj = new Random(1);
 
             //Заполнение таблицы емкостей
-            string[] tank_voc = { "Цистерна_", "Ведро_", "Бак_", "Фляга_" };
-            string[] material_voc = { "Сталь", "Дерево", "Алюминий", "Полиэтилен" };
+            string[] tank_voc = { "Цистерна_", "Ведро_", "Бак_", "Фляга_", "Цистерна_"};
+            string[] material_voc = { "Сталь", "Платина", "Алюминий", "ПЭТ", "Чугун", "Алюминий", "Сталь"};
             int count_tank_voc = tank_voc.GetLength(0);
             int count_material_voc = material_voc.GetLength(0);
             
             for (int tankID=1; tankID <= tanks_number; tankID++)
             {
-                Random randObj = new Random(tankID);
-                string tankType = tank_voc[randObj.Next(count_tank_voc)] + tankID.ToString();
-                string tankMaterial = material_voc[randObj.Next(count_material_voc)];
-                float tankWeight = 500*(float)randObj.NextDouble();
-                float tankVolume = 200 * (float)randObj.NextDouble();
+                tankType = tank_voc[randObj.Next(count_tank_voc)] + tankID.ToString();
+                tankMaterial = material_voc[randObj.Next(count_material_voc)];
+                tankWeight = 500*(float)randObj.NextDouble();
+                tankVolume = 200 * (float)randObj.NextDouble();
                 db.Tanks.Add(new Tank { TankID = tankID, TankType = tankType, TankWeight = tankWeight, TankVolume = tankVolume, TankMaterial = tankMaterial });
             }
 
             //Заполнение таблицы видов топлива
-            string[] fuel_voc = { "Нефть_", "Бензин_", "Керосин_", "Мазут_" };
+            string[] fuel_voc = { "Нефть_", "Бензин_", "Керосин_", "Мазут_", "Спирт_" };
             int count_fuel_voc = fuel_voc.GetLength(0);
             for (int fuelID = 1; fuelID <= fuels_number; fuelID++)
             {
-                Random randObj = new Random(fuelID);
-                string fuelType = fuel_voc[randObj.Next(count_fuel_voc)] + fuelID.ToString();
-                float fuelDensity = 2 * (float)randObj.NextDouble();
+                fuelType =fuel_voc[randObj.Next(count_fuel_voc)] + fuelID.ToString();
+                fuelDensity = 2 * (float)randObj.NextDouble();
                 db.Fuels.Add(new Fuel { FuelID = fuelID, FuelType = fuelType, FuelDensity = fuelDensity });
             }
 
-            //Заполнение таблицы 
+            //Заполнение таблицы операций
 
             for (int operationID = 1; operationID <= operations_number; operationID++)
             {
-                Random randObj = new Random(operationID);
-                int tankID = randObj.Next(tanks_number);
-                int fuelID= randObj.Next(fuels_number);
-                DateTime today = DateTime.Now;
+                int tankID = randObj.Next(1,tanks_number-1);
+                int fuelID= randObj.Next(1,fuels_number-1);
+                int inc_exp = randObj.Next(200)-100;
+                DateTime today = DateTime.Now.Date;
                 DateTime operationdate = today.AddDays(-operationID);
-                db.Operations.Add(new Operation { OperationID= operationID, TankID = tankID, FuelID = fuelID, Inc_Exp=10, Date= operationdate });
+                db.Operations.Add(new Operation { OperationID= operationID, TankID = tankID, FuelID = fuelID, Inc_Exp= inc_exp, Date= operationdate });
             }
 
             db.SaveChanges();

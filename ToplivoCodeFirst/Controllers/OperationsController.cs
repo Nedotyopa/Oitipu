@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using PagedList;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -11,10 +12,14 @@ namespace ToplivoCodeFirst.Controllers
         private ToplivoContext db = new ToplivoContext();
 
         // GET: Operations
-        public ActionResult Index()
+        public ActionResult Index(int page=1)
         {
-            var operations = db.Operations.Include(o => o.Fuel).Include(o => o.Tank);
-            return View(operations.ToList());
+
+            int pageSize = 3;
+            int pageNumber = page;
+            var operations = db.Operations.Include(o => o.Fuel).Include(o => o.Tank).OrderBy(o=>o.OperationID);
+            return View(operations.ToPagedList(pageNumber, pageSize));
+
         }
 
         // GET: Operations/Details/5

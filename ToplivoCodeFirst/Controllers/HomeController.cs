@@ -13,11 +13,12 @@ namespace ToplivoCodeFirst.Controllers
             unitOfWork = new UnitOfWork();
         }
 
-        public ActionResult Index(int page = 1, int pagesize = 30)
+        public ActionResult Index(int page = 1, int pagesize = 20)
         {  
             ViewBag.NumberOperations = pagesize;
             //Получаем из БД  pagesize объектов Operation, при этом будут подгружаться данные из Tank и Fuel
             PagedCollection<Operation> pagedcollection = unitOfWork.Operations.GetNumberItems(t=>true,page, pagesize);
+
             // передаем все объекты в динамическое свойство Operations в ViewBag
             ViewBag.Operations = pagedcollection.PagedItems;
             ViewBag.PageInfo = pagedcollection.PageInfo;
