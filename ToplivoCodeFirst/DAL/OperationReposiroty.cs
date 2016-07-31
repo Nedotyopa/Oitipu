@@ -39,7 +39,7 @@ namespace ToplivoCodeFirst.Models
 
         public IEnumerable<Operation> GetAll()
         {
-            return db.Operations.Include(o=>o.Fuel).Include(o=>o.Tank);
+            return db.Operations.Include(o=>o.Fuel).Include(o=>o.Tank).OrderBy(o=>o.OperationID);
         }
 
         public PagedCollection<Operation> GetNumberItems(Func<Operation, bool> predicate, int page = 1, int pageSize = 30)

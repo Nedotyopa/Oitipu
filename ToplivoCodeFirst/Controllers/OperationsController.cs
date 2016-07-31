@@ -1,6 +1,5 @@
 ﻿using PagedList;
-using System.Data.Entity;
-using System.Linq;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
 using ToplivoCodeFirst.Models;
@@ -9,17 +8,26 @@ namespace ToplivoCodeFirst.Controllers
 {
     public class OperationsController : Controller
     {
-        private ToplivoContext db = new ToplivoContext();
+        UnitOfWork unitOfWork;
+        public PageInfo pageinfo;
+        public OperationsController()
+        {
+            // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
+            unitOfWork = new UnitOfWork();
+            int page = 1;
+            pageinfo = new PageInfo { PageNumber = page, PageSize = 20, TotalItems = 0 };
+        }
 
         // GET: Operations
-        public ActionResult Index(int page=1)
+        public ActionResult Index(int page=1, string strTankTypeFind = "", string strFuelTypeFind = "")
         {
-
-            int pageSize = 3;
+            int pageSize = pageinfo.PageSize;
             int pageNumber = page;
-            var operations = db.Operations.Include(o => o.Fuel).Include(o => o.Tank).OrderBy(o=>o.OperationID);
-            return View(operations.ToPagedList(pageNumber, pageSize));
+            IEnumerable<Operation> operations = unitOfWork.Operations.Find(t => (t.Tank.TankType.Contains(strTankTypeFind)));
 
+            Session["OperationPage"] = page;
+            Session["strTankTypeFind"] = strTankTypeFind; Session["strFuelTypeFind"] = strFuelTypeFind;
+            return View(operations.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Operations/Details/5
@@ -29,7 +37,7 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Operation operation = db.Operations.Find(id);
+            Operation operation = unitOfWork.Operations.Get((int)id);
             if (operation == null)
             {
                 return HttpNotFound();
@@ -40,8 +48,8 @@ namespace ToplivoCodeFirst.Controllers
         // GET: Operations/Create
         public ActionResult Create()
         {
-            ViewBag.FuelID = new SelectList(db.Fuels, "FuelID", "FuelType");
-            ViewBag.TankID = new SelectList(db.Tanks, "TankID", "TankType");
+            ViewBag.FuelID = new SelectList(unitOfWork.Fuels.GetAll(), "FuelID", "FuelType");
+            ViewBag.TankID = new SelectList(unitOfWork.Tanks.GetAll(), "TankID", "TankType");
             return View();
         }
 
@@ -50,17 +58,17 @@ namespace ToplivoCodeFirst.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OperationID,FuelID,TankID,Inc_Exp,Date")] Operation operation)
+        public ActionResult Create(Operation operation)
         {
             if (ModelState.IsValid)
             {
-                db.Operations.Add(operation);
-                db.SaveChanges();
+                unitOfWork.Operations.Create(operation);
+                unitOfWork.Operations.Save();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.FuelID = new SelectList(db.Fuels, "FuelID", "FuelType", operation.FuelID);
-            ViewBag.TankID = new SelectList(db.Tanks, "TankID", "TankType", operation.TankID);
+            ViewBag.FuelID = new SelectList(unitOfWork.Fuels.GetAll(), "FuelID", "FuelType", operation.FuelID);
+            ViewBag.TankID = new SelectList(unitOfWork.Tanks.GetAll(), "TankID", "TankType", operation.TankID);
             return View(operation);
         }
 
@@ -71,13 +79,13 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Operation operation = db.Operations.Find(id);
+            Operation operation = unitOfWork.Operations.Get((int)id);
             if (operation == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.FuelID = new SelectList(db.Fuels, "FuelID", "FuelType", operation.FuelID);
-            ViewBag.TankID = new SelectList(db.Tanks, "TankID", "TankType", operation.TankID);
+            ViewBag.FuelID = new SelectList(unitOfWork.Fuels.GetAll(), "FuelID", "FuelType", operation.FuelID);
+            ViewBag.TankID = new SelectList(unitOfWork.Tanks.GetAll(), "TankID", "TankType", operation.TankID);
             return View(operation);
         }
 
@@ -86,16 +94,16 @@ namespace ToplivoCodeFirst.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OperationID,FuelID,TankID,Inc_Exp,Date")] Operation operation)
+        public ActionResult Edit( Operation operation)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(operation).State = EntityState.Modified;
-                db.SaveChanges();
+                unitOfWork.Operations.Update(operation);
+                unitOfWork.Operations.Save();
                 return RedirectToAction("Index");
             }
-            ViewBag.FuelID = new SelectList(db.Fuels, "FuelID", "FuelType", operation.FuelID);
-            ViewBag.TankID = new SelectList(db.Tanks, "TankID", "TankType", operation.TankID);
+            ViewBag.FuelID = new SelectList(unitOfWork.Fuels.GetAll(), "FuelID", "FuelType", operation.FuelID);
+            ViewBag.TankID = new SelectList(unitOfWork.Tanks.GetAll(), "TankID", "TankType", operation.TankID);
             return View(operation);
         }
 
@@ -106,7 +114,7 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Operation operation = db.Operations.Find(id);
+            Operation operation = unitOfWork.Operations.Get((int)id);
             if (operation == null)
             {
                 return HttpNotFound();
@@ -119,17 +127,26 @@ namespace ToplivoCodeFirst.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Operation operation = db.Operations.Find(id);
-            db.Operations.Remove(operation);
-            db.SaveChanges();
+            unitOfWork.Operations.Delete(id);
+            unitOfWork.Operations.Save();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult RedirectToIndex()
+        {
+            int page = (int)Session["OperationPage"];
+            string strTankTypeFind = (string)Session["strTankTypeFind"];
+            string strFuelTypeFind = (string)Session["strFuelTypeFind"];
+
+            IEnumerable<Operation> operations = unitOfWork.Operations.Find(t => ((t.Tank.TankType.Contains(strTankTypeFind))&((t.Fuel.FuelType.Contains(strFuelTypeFind)))));
+            return View("Index", operations.ToPagedList(page, pageinfo.PageSize));
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

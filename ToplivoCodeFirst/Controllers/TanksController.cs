@@ -21,7 +21,7 @@ namespace ToplivoCodeFirst.Controllers
         public ActionResult Index(int page=1, string strTankTypeFind = "")
         {
             PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t=>(t.TankType.Contains(strTankTypeFind)),page, pageinfo.PageSize);
-            pageinfo.PageNumber = page; pageinfo.PageSize = pagedcollection.PageInfo.TotalItems;
+            pageinfo.PageNumber = page; 
             Session["TankPage"] = page;
             Session["strTankTypeFind"] = strTankTypeFind;
             return View(pagedcollection);
@@ -35,7 +35,6 @@ namespace ToplivoCodeFirst.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             if (id == -1) return RedirectToIndex();
-
             Tank tank = unitOfWork.Tanks.Get((int)id);
             if (tank == null)
             {
@@ -74,7 +73,6 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             if (id == -1) return RedirectToIndex();
 
             Tank tank = unitOfWork.Tanks.Get((int)id);
