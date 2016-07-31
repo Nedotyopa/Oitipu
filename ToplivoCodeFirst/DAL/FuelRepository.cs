@@ -70,7 +70,7 @@ namespace ToplivoCodeFirst.Models
                     db.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public void Dispose()
