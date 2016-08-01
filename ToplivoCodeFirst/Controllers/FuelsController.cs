@@ -16,7 +16,7 @@ namespace ToplivoCodeFirst.Controllers
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
-            int page = 1;
+            int page = (int)Session["FuelPage"];
             pageinfo = new PageInfo { PageNumber = page, PageSize = 20, TotalItems = 0 };
         }
         // GET: Fuels

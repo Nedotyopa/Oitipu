@@ -37,6 +37,8 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            if (id == -1) return RedirectToIndex();
+
             Operation operation = unitOfWork.Operations.Get((int)id);
             if (operation == null)
             {
@@ -79,6 +81,8 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            if (id == -1) return RedirectToIndex();
+
             Operation operation = unitOfWork.Operations.Get((int)id);
             if (operation == null)
             {

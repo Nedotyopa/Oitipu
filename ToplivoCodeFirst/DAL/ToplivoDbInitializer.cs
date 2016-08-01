@@ -3,7 +3,8 @@ using System.Data.Entity;
 
 namespace ToplivoCodeFirst.Models
 {
-    public class ToplivoDbInitializer : DropCreateDatabaseAlways<ToplivoContext>
+    //Класс для инициализации базы данных путем заполнения ее таблиц тестовым набором записей
+    public class ToplivoDbInitializer : CreateDatabaseIfNotExists<ToplivoContext>
     {
         protected override void Seed(ToplivoContext db)
         {
@@ -17,12 +18,11 @@ namespace ToplivoCodeFirst.Models
             string fuelType;
             float fuelDensity;
 
-
             Random randObj = new Random(1);
 
             //Заполнение таблицы емкостей
-            string[] tank_voc = { "Цистерна_", "Ведро_", "Бак_", "Фляга_", "Цистерна_"};
-            string[] material_voc = { "Сталь", "Платина", "Алюминий", "ПЭТ", "Чугун", "Алюминий", "Сталь"};
+            string[] tank_voc = { "Цистерна_", "Ведро_", "Бак_", "Фляга_", "Цистерна_"};//словарь названий емкостей
+            string[] material_voc = { "Сталь", "Платина", "Алюминий", "ПЭТ", "Чугун", "Алюминий", "Сталь"};//словарь названий видов топлива
             int count_tank_voc = tank_voc.GetLength(0);
             int count_material_voc = material_voc.GetLength(0);
             
@@ -56,7 +56,7 @@ namespace ToplivoCodeFirst.Models
                 DateTime operationdate = today.AddDays(-operationID);
                 db.Operations.Add(new Operation { OperationID= operationID, TankID = tankID, FuelID = fuelID, Inc_Exp= inc_exp, Date= operationdate });
             }
-
+            //сохранение изменений в базу данных, саязанную с объектом контекста
             db.SaveChanges();
         }
         

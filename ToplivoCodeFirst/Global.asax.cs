@@ -26,7 +26,11 @@ namespace ToplivoCodeFirst
             {
                 db.Database.Initialize(true);
             }
-
+            //Инициализация переменных сессии
+            Session["TankPage"] = 1;
+            Session["FuelPage"] = 1;
+            Session["OperationPage"] = 1;
+            Session["strTankTypeFind"] = ""; Session["strFuelTypeFind"] = "";
         }
     }
 }
