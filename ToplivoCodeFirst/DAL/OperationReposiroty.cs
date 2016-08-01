@@ -29,7 +29,7 @@ namespace ToplivoCodeFirst.Models
 
         public IEnumerable<Operation> Find(Func<Operation, bool> predicate)
         {
-            return db.Operations.Where(predicate).ToList();
+            return db.Operations.Include(o => o.Fuel).Include(o => o.Tank).Where(predicate).ToList();
         }
 
         public Operation Get(int id)

@@ -1,22 +1,20 @@
 ﻿@model PagedList.IPagedList<ToplivoCodeFirst.Models.Operation>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Операции";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Список операций</h2>
 
 <p>
-    @Html.ActionLink("Зарегестрировать новую операцию", "Create")
+    @Html.ActionLink("Новая операция", "Create")
 </p>
-@using (Html.BeginForm("Index", "Fuels", FormMethod.Get))
-{
+@using (Html.BeginForm("Index", "Operations", FormMethod.Get)){
     <fieldset>
         Наименование емкости: @Html.TextBox("strFuelTypeFind", (string)Session["strFuelTypeFind"])
-        <input type="submit" value="Найти" />
         Наименование топлива: @Html.TextBox("strTankTypeFind", (string)Session["strTankTypeFind"])
-        <input type="submit" value="Найти" />
+        <br/><input type="submit" value="Найти" />
     </fieldset>
 }
 <table class="table">

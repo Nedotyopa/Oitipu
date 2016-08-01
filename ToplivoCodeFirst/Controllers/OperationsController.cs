@@ -23,7 +23,7 @@ namespace ToplivoCodeFirst.Controllers
         {
             int pageSize = pageinfo.PageSize;
             int pageNumber = page;
-            IEnumerable<Operation> operations = unitOfWork.Operations.Find(t => (t.Tank.TankType.Contains(strTankTypeFind)));
+            IEnumerable<Operation> operations = unitOfWork.Operations.Find(t => ((t.Tank.TankType.Contains(strTankTypeFind)))&(t.Fuel.FuelType.Contains(strFuelTypeFind)));
 
             Session["OperationPage"] = page;
             Session["strTankTypeFind"] = strTankTypeFind; Session["strFuelTypeFind"] = strFuelTypeFind;
