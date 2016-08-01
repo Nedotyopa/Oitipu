@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Топливная база";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="jumbotron">
     <h1>Топливная база</h1>
     <h2>Последние  @ViewBag.NumberOperations операций</h2>
@@ -13,7 +13,6 @@
         <th>Топливо</th>
         <th>Приход (расход)</th>
         <th>Дата</th>
-
     </tr>
 
     @foreach (var b in ViewBag.Operations)
@@ -24,8 +23,6 @@
             <td>@b.Fuel.FuelType</td>
             <td>@b.Inc_Exp</td>
             <td>@b.Date.ToString("dd.MM.yyyy")</td>
-
-
         </tr>
     }
     </table>

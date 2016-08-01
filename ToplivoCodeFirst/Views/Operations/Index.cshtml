@@ -14,7 +14,7 @@
     <fieldset>
         Наименование топлива: @Html.TextBox("strFuelTypeFind", (string)Session["strFuelTypeFind"])
         Наименование емкости: @Html.TextBox("strTankTypeFind", (string)Session["strTankTypeFind"])
-        <br/><input type="submit" value="Найти" />
+        <input type="submit" value="Найти" />
     </fieldset>
 }
 <table class="table">
@@ -59,4 +59,7 @@
 </table>
 Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page=page, }))
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page=page,
+    strTankTypeFind=Session["strTankTypeFind"],
+    strFuelTypeFind = Session["strFuelTypeFind"]
+}))
