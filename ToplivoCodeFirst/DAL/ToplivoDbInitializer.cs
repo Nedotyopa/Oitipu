@@ -7,8 +7,8 @@ namespace ToplivoCodeFirst.Models
     {
         protected override void Seed(ToplivoContext db)
         {
-            int tanks_number = 100;
-            int fuels_number = 10;
+            int tanks_number = 35;
+            int fuels_number = 35;
             int operations_number = 300;
             string tankType;
             string tankMaterial;

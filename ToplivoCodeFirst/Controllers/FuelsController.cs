@@ -36,6 +36,8 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            if (id == -1) return RedirectToIndex();
+
             Fuel fuel = unitOfWork.Fuels.Get((int)id);
             if (fuel == null)
             {

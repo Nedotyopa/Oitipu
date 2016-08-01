@@ -12,8 +12,8 @@
 </p>
 @using (Html.BeginForm("Index", "Operations", FormMethod.Get)){
     <fieldset>
-        Наименование емкости: @Html.TextBox("strFuelTypeFind", (string)Session["strFuelTypeFind"])
-        Наименование топлива: @Html.TextBox("strTankTypeFind", (string)Session["strTankTypeFind"])
+        Наименование топлива: @Html.TextBox("strFuelTypeFind", (string)Session["strFuelTypeFind"])
+        Наименование емкости: @Html.TextBox("strTankTypeFind", (string)Session["strTankTypeFind"])
         <br/><input type="submit" value="Найти" />
     </fieldset>
 }
@@ -59,4 +59,4 @@
 </table>
 Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page=page, }))

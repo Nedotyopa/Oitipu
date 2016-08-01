@@ -15,6 +15,7 @@
 { 
    <fieldset>
         Наименование емкости: @Html.TextBox("strTankTypeFind", (string)Session["strTankTypeFind"])
+       @Html.Hidden("page",Model.PageInfo.PageNumber)
         <input type="submit" value="Найти" />
     </fieldset>
 }
@@ -63,5 +64,5 @@
     
 </table>
 <div class="btn-group">
-    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x, strTankTypeFind= Session["strTankTypeFind"] }))
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
 </div>
