@@ -8,24 +8,22 @@ namespace ToplivoCodeFirst.Controllers
     public class TanksController : Controller
     {
         UnitOfWork unitOfWork;
-        public PageInfo pageinfo;
-        TransferData transferdata;
+        TransferData transferdata = new TransferData { TankPage = 1, FuelPage = 1, OperationPage = 1, strTankTypeFind = "", strFuelTypeFind = "" };
 
         public TanksController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
-            pageinfo = new PageInfo { PageNumber = transferdata.TankPage, PageSize = 20, TotalItems = 0 };
         }
-
-        // GET: Tanks
-        public ActionResult Index(int page=1, string strTankTypeFind = "")
+        // GET: Tanks        
+        public ActionResult Index(int PageNumber=1, string SearchString = "")
         {
-            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t=>(t.TankType.Contains(strTankTypeFind)),page, pageinfo.PageSize);
-            transferdata = (TransferData)Session["TransferData"];
-            pageinfo.PageNumber = page;
-            transferdata.TankPage = page; transferdata.strTankTypeFind = strTankTypeFind;
+            transferdata.TankPage = PageNumber; transferdata.strTankTypeFind = SearchString;
             Session["TransferData"] = transferdata;
+
+            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t => (t.TankType.Contains(SearchString)), PageNumber);
+            pagedcollection.PageInfo.SearchString = SearchString;
+
             return View(pagedcollection);
         }
 
@@ -130,9 +128,12 @@ namespace ToplivoCodeFirst.Controllers
 
         public ActionResult RedirectToIndex()
         {
+            transferdata =(TransferData)Session["TransferData"];
             int page = transferdata.TankPage;
-            string strTankTypeFind=transferdata.strTankTypeFind;
-            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t => (t.TankType.Contains(strTankTypeFind)),page, pageinfo.PageSize);
+            string searchstring = transferdata.strTankTypeFind;
+            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t => (t.TankType.Contains(searchstring)),page);
+            pagedcollection.PageInfo.SearchString = searchstring;
+
             return View("Index", pagedcollection);
         }
 

@@ -14,8 +14,9 @@
 @using (Html.BeginForm("Index", "Tanks", FormMethod.Get))
 { 
    <fieldset>
-        Наименование емкости: @Html.TextBox("strTankTypeFind", (string)Session["strTankTypeFind"])
-       @Html.Hidden("page",Model.PageInfo.PageNumber)
+        Наименование емкости:        
+       @Html.TextBox("SearchString", Model.PageInfo.SearchString)
+       @Html.Hidden("PageNumber", Model.PageInfo.PageNumber)
         <input type="submit" value="Найти" />
     </fieldset>
 }
@@ -64,5 +65,5 @@
     
 </table>
 <div class="btn-group">
-    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { PageNumber= x, SearchString = ((TransferData)Session["TransferData"]).strTankTypeFind }))
 </div>
