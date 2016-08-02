@@ -17,5 +17,12 @@ namespace ToplivoCodeFirst.Models
                 return (int)Math.Ceiling((decimal)TotalItems / PageSize);
             }
         }
+        public PageInfo()
+        {
+            PageNumber = 1;
+            PageSize = 20;
+            TotalItems = 0;
+            SearchString = "";
+        }
     }
 }

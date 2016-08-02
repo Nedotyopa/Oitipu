@@ -23,12 +23,8 @@ namespace ToplivoCodeFirst.Controllers
         // GET: Fuels
         public ActionResult Index(PageInfo pageinfo)
         {
-            int page = 1; string strsearch = "";
-            if (pageinfo.PageNumber != 0)
-            {
-                page = pageinfo.PageNumber;
-                strsearch = pageinfo.SearchString;
-            }
+            int page = pageinfo.PageNumber; string strsearch = pageinfo.SearchString;
+            
             transferdata.TankPage = page; transferdata.strTankTypeFind = strsearch;
             Session["TransferData"] = transferdata;
 
