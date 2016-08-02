@@ -1,15 +1,15 @@
-﻿@model ToplivoCodeFirst.Models.PagedCollection<Fuel>
+﻿@model PagedCollection<Fuel>
 @using ToplivoCodeFirst.Models
 @using ToplivoCodeFirst.Helpers
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Виды топлива";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Виды топлива</h2>
 
 <p>
-    @Html.ActionLink("Создать новый вид", "Create")
+    @Html.ActionLink("Добавить вид топлива", "Create")
 </p>
 @using (Html.BeginForm("Index", "Fuels", FormMethod.Get))
 {

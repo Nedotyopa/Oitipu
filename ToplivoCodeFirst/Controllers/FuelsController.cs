@@ -10,22 +10,19 @@ namespace ToplivoCodeFirst.Controllers
     public class FuelsController : Controller
     {
         UnitOfWork unitOfWork;
-        public PageInfo pageinfo;
         TransferData transferdata = new TransferData { TankPage = 1, FuelPage = 1, OperationPage = 1, strTankTypeFind = "", strFuelTypeFind = "" };
-
 
         public FuelsController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
-            pageinfo = new PageInfo { PageNumber = transferdata.FuelPage, PageSize = 20, TotalItems = 0 };
         }
         // GET: Fuels
         public ActionResult Index(PageInfo pageinfo)
         {
             int page = pageinfo.PageNumber; string strsearch = pageinfo.SearchString;
             
-            transferdata.TankPage = page; transferdata.strTankTypeFind = strsearch;
+            transferdata.FuelPage = page; transferdata.strFuelTypeFind = strsearch;
             Session["TransferData"] = transferdata;
 
             PagedCollection<Fuel> pagedcollection = unitOfWork.Fuels.GetNumberItems(t => (t.FuelType.Contains(strsearch)), page);
@@ -137,7 +134,7 @@ namespace ToplivoCodeFirst.Controllers
         public ActionResult RedirectToIndex()
         {
             transferdata = (TransferData)Session["TransferData"];
-            int page = transferdata.TankPage;
+            int page = transferdata.FuelPage;
             string searchstring = transferdata.strFuelTypeFind;
             PagedCollection<Fuel> pagedcollection = unitOfWork.Fuels.GetNumberItems(t => (t.FuelType.Contains(searchstring)), page);
             pagedcollection.PageInfo.SearchString = searchstring;
