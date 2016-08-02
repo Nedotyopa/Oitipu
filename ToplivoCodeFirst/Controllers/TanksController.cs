@@ -14,15 +14,23 @@ namespace ToplivoCodeFirst.Controllers
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
-        }
+        }       
+        
+        
         // GET: Tanks        
-        public ActionResult Index(int PageNumber=1, string SearchString = "")
+        public ActionResult Index(PageInfo pageinfo)
         {
-            transferdata.TankPage = PageNumber; transferdata.strTankTypeFind = SearchString;
+            int page = 1; string strsearch = "";
+            if (pageinfo.PageNumber != 0)
+            {
+                page = pageinfo.PageNumber;
+                strsearch = pageinfo.SearchString;
+            }
+            transferdata.TankPage =page ; transferdata.strTankTypeFind = strsearch;
             Session["TransferData"] = transferdata;
 
-            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t => (t.TankType.Contains(SearchString)), PageNumber);
-            pagedcollection.PageInfo.SearchString = SearchString;
+            PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t => (t.TankType.Contains(strsearch)), page);
+            pagedcollection.PageInfo.SearchString = strsearch;
 
             return View(pagedcollection);
         }

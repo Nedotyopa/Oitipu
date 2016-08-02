@@ -65,5 +65,5 @@
     
 </table>
 <div class="btn-group">
-    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { PageNumber= x, SearchString = ((TransferData)Session["TransferData"]).strTankTypeFind }))
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { PageNumber= x, SearchString = Model.PageInfo.SearchString }))
 </div>

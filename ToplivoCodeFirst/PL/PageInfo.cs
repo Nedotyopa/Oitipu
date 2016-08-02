@@ -12,7 +12,10 @@ namespace ToplivoCodeFirst.Models
         public string SearchString { get; set; } //значение строки поиска 
         public int TotalPages  // всего страниц
         {
-            get { return (int)Math.Ceiling((decimal)TotalItems / PageSize); }
+            get {
+                if (PageSize== 0) return 0;
+                return (int)Math.Ceiling((decimal)TotalItems / PageSize);
+            }
         }
     }
 }

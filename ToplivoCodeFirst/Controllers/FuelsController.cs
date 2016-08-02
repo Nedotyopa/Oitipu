@@ -21,12 +21,20 @@ namespace ToplivoCodeFirst.Controllers
             pageinfo = new PageInfo { PageNumber = transferdata.FuelPage, PageSize = 20, TotalItems = 0 };
         }
         // GET: Fuels
-        public ActionResult Index(int page = 1, string strFuelTypeFind = "")
+        public ActionResult Index(PageInfo pageinfo)
         {
-            PagedCollection<Fuel> pagedcollection = unitOfWork.Fuels.GetNumberItems(t => (t.FuelType.Contains(strFuelTypeFind)), page, pageinfo.PageSize);
-            pageinfo.PageNumber = page; pageinfo.PageSize = pagedcollection.PageInfo.TotalItems;
-            Session["FuelPage"] = page;
-            Session["strFuelTypeFind"] = strFuelTypeFind;
+            int page = 1; string strsearch = "";
+            if (pageinfo.PageNumber != 0)
+            {
+                page = pageinfo.PageNumber;
+                strsearch = pageinfo.SearchString;
+            }
+            transferdata.TankPage = page; transferdata.strTankTypeFind = strsearch;
+            Session["TransferData"] = transferdata;
+
+            PagedCollection<Fuel> pagedcollection = unitOfWork.Fuels.GetNumberItems(t => (t.FuelType.Contains(strsearch)), page);
+            pagedcollection.PageInfo.SearchString = strsearch;
+
             return View(pagedcollection);
         }
 
@@ -129,13 +137,15 @@ namespace ToplivoCodeFirst.Controllers
             unitOfWork.Fuels.Save();
             return RedirectToAction("Index");
         }
-        
+
         public ActionResult RedirectToIndex()
         {
             transferdata = (TransferData)Session["TransferData"];
-            int page = (int)Session["FuelPage"];
-            string strFuelTypeFind = (string)Session["strFuelTypeFind"];
-            PagedCollection<Fuel> pagedcollection = unitOfWork.Fuels.GetNumberItems(t => (t.FuelType.Contains(strFuelTypeFind)), page, pageinfo.PageSize);
+            int page = transferdata.TankPage;
+            string searchstring = transferdata.strFuelTypeFind;
+            PagedCollection<Fuel> pagedcollection = unitOfWork.Fuels.GetNumberItems(t => (t.FuelType.Contains(searchstring)), page);
+            pagedcollection.PageInfo.SearchString = searchstring;
+
             return View("Index", pagedcollection);
         }
 
