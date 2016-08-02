@@ -9,21 +9,23 @@ namespace ToplivoCodeFirst.Controllers
     {
         UnitOfWork unitOfWork;
         public PageInfo pageinfo;
+        TransferData transferdata;
+
         public TanksController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
-            int page = (int)Session["TankPage"];
-            pageinfo = new PageInfo { PageNumber = page, PageSize = 20, TotalItems = 0 };
+            pageinfo = new PageInfo { PageNumber = transferdata.TankPage, PageSize = 20, TotalItems = 0 };
         }
 
         // GET: Tanks
         public ActionResult Index(int page=1, string strTankTypeFind = "")
         {
             PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t=>(t.TankType.Contains(strTankTypeFind)),page, pageinfo.PageSize);
-            pageinfo.PageNumber = page; 
-            Session["TankPage"] = page;
-            Session["strTankTypeFind"] = strTankTypeFind;
+            transferdata = (TransferData)Session["TransferData"];
+            pageinfo.PageNumber = page;
+            transferdata.TankPage = page; transferdata.strTankTypeFind = strTankTypeFind;
+            Session["TransferData"] = transferdata;
             return View(pagedcollection);
         }
 
@@ -128,8 +130,8 @@ namespace ToplivoCodeFirst.Controllers
 
         public ActionResult RedirectToIndex()
         {
-            int page = (int)Session["TankPage"];
-            string strTankTypeFind=(string)Session["strTankTypeFind"];
+            int page = transferdata.TankPage;
+            string strTankTypeFind=transferdata.strTankTypeFind;
             PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t => (t.TankType.Contains(strTankTypeFind)),page, pageinfo.PageSize);
             return View("Index", pagedcollection);
         }

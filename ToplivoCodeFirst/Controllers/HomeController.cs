@@ -7,14 +7,19 @@ namespace ToplivoCodeFirst.Controllers
     public class HomeController : Controller
     {
         UnitOfWork unitOfWork;
+        TransferData transferdata = new TransferData();
+
         public HomeController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
         }
 
-        public ActionResult Index(int page = 1, int pagesize = 20)
-        {  
+        public ActionResult Index(int pagesize = 20)
+        {
+            //Инициализация временных переменных сессии для использования разными объектами
+            Session["TransferData"] = transferdata;
+            int            page = transferdata.OperationPage;
             ViewBag.NumberOperations = pagesize;
             //Получаем из БД  pagesize объектов Operation, при этом будут подгружаться данные из Tank и Fuel
             PagedCollection<Operation> pagedcollection = unitOfWork.Operations.GetNumberItems(t=>true,page, pagesize);

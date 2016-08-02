@@ -148,6 +148,7 @@
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="Models\Operation.cs" />
     <Compile Include="DAL\OperationReposiroty.cs" />
+    <Compile Include="PL\TransferData.cs" />
     <Compile Include="PL\PagedCollection.cs" />
     <Compile Include="Models\Tank.cs" />
     <Compile Include="DAL\TankRepository.cs" />

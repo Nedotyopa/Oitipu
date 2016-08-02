@@ -2,6 +2,8 @@
 
 namespace ToplivoCodeFirst.Models
 {
+    //Класс для описания общей информации на странице приложения
+   
     public class PageInfo
     {
         public int PageNumber { get; set; } // номер текущей страницы
