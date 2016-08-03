@@ -15,7 +15,7 @@ namespace ToplivoCodeFirst.Controllers
             unitOfWork = new UnitOfWork();
         }
 
-        public ActionResult Index(int pagesize = 20)
+        public ActionResult Index(int pagesize = 10)
         {
             //Инициализация временных переменных сессии для использования разными объектами
             int page = transferdata.OperationPage;

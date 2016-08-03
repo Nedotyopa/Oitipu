@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace ToplivoCodeFirst.Models
 {
     public class Operation
@@ -9,10 +11,12 @@ namespace ToplivoCodeFirst.Models
         public int OperationID { get; set; }
         //ID топлива
         [Display(Name = "Код топлива")]
-        public int? FuelID { get; set; }
+        [ForeignKey("Fuel")]
+        public int FuelID { get; set; }
         //ID емкости
         [Display(Name = "Код емкости")]
-        public int? TankID { get; set; }
+        [ForeignKey("Tank")]
+        public int TankID { get; set; }
         //Приход/Расход
         [Display(Name = "+Приход/-Расход")]
         public float? Inc_Exp { get; set; }
