@@ -84,6 +84,7 @@ namespace ToplivoCodeFirst.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(tank);
         }
 
@@ -96,9 +97,12 @@ namespace ToplivoCodeFirst.Controllers
         {
             if (ModelState.IsValid)
             {
-                string filename = unitOfWork.Tanks.UpdateWithPicture(tank,upload);
+                if (upload == null)
+                { unitOfWork.Tanks.Update(tank); }
+                else
+                { string filename = unitOfWork.Tanks.UpdateWithPicture(tank, upload); }
                 unitOfWork.Tanks.Save();
-                return RedirectToAction("Edit", new { id = tank.TankID });
+                
             }
             return View(tank);
         }
