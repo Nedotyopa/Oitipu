@@ -20,8 +20,8 @@ namespace ToplivoCodeFirst.Controllers
         // GET: Tanks        
         public ActionResult Index(PageInfo pageinfo)
         {
-            int page = pageinfo.PageNumber; string strsearch = pageinfo.SearchString;
-            
+            int page = pageinfo.PageNumber; string strsearch = pageinfo.SearchString ?? "";
+
             transferdata.TankPage =page ; transferdata.strTankTypeFind = strsearch;
             Session["TransferData"] = transferdata;
 

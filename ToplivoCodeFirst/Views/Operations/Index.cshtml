@@ -1,5 +1,6 @@
 ﻿@model PagedList.IPagedList<ToplivoCodeFirst.Models.Operation>
 @using PagedList.Mvc;
+@using ToplivoCodeFirst.Models
 @{
     ViewBag.Title = "Операции";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,8 +13,8 @@
 </p>
 @using (Html.BeginForm("Index", "Operations", FormMethod.Get)){
     <fieldset>
-        Наименование топлива: @Html.TextBox("strFuelTypeFind", (string)Session["strFuelTypeFind"])
-        Наименование емкости: @Html.TextBox("strTankTypeFind", (string)Session["strTankTypeFind"])
+        Наименование топлива: @Html.TextBox("strFuelTypeFind", ((TransferData)Session["TransferData"]).strFuelTypeFind)
+        Наименование емкости: @Html.TextBox("strTankTypeFind", ((TransferData)Session["TransferData"]).strTankTypeFind)
         <input type="submit" value="Найти" />
     </fieldset>
 }
@@ -60,6 +61,6 @@
 Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page=page,
-    strTankTypeFind=Session["strTankTypeFind"],
-    strFuelTypeFind = Session["strFuelTypeFind"]
+    strTankTypeFind= ((TransferData)Session["TransferData"]).strTankTypeFind,
+    strFuelTypeFind = ((TransferData)Session["TransferData"]).strFuelTypeFind
 }))

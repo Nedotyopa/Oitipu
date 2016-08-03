@@ -9,26 +9,26 @@ namespace ToplivoCodeFirst.Controllers
     public class OperationsController : Controller
     {
         UnitOfWork unitOfWork;
-        public PageInfo pageinfo;
         TransferData transferdata = new TransferData { TankPage = 1, FuelPage = 1, OperationPage = 1, strTankTypeFind = "", strFuelTypeFind = "" };
-
+        int pageSize = 20;
         public OperationsController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
-            pageinfo = new PageInfo { PageNumber = transferdata.OperationPage, PageSize = 20, TotalItems = 0 };
         }
 
         // GET: Operations
         public ActionResult Index(int page=1, string strTankTypeFind = "", string strFuelTypeFind = "")
         {
-            int pageSize = pageinfo.PageSize;
-            int pageNumber = page;
+            transferdata.OperationPage = page;
+            transferdata.strTankTypeFind = strTankTypeFind;
+            transferdata.strFuelTypeFind = strFuelTypeFind;
+            Session["TransferData"] = transferdata;
+
             IEnumerable<Operation> operations = unitOfWork.Operations.Find(t => ((t.Tank.TankType.Contains(strTankTypeFind)))&(t.Fuel.FuelType.Contains(strFuelTypeFind)));
 
-            Session["OperationPage"] = page;
-            Session["strTankTypeFind"] = strTankTypeFind; Session["strFuelTypeFind"] = strFuelTypeFind;
-            return View(operations.ToPagedList(pageNumber, pageSize));
+       
+            return View(operations.ToPagedList(page, pageSize));
         }
 
         // GET: Operations/Details/5
@@ -139,13 +139,14 @@ namespace ToplivoCodeFirst.Controllers
 
         public ActionResult RedirectToIndex()
         {
-            transferdata = (TransferData)Session["TransferData"];
-            int page = (int)Session["OperationPage"];
-            string strTankTypeFind = (string)Session["strTankTypeFind"];
-            string strFuelTypeFind = (string)Session["strFuelTypeFind"];
 
-            IEnumerable<Operation> operations = unitOfWork.Operations.Find(t => ((t.Tank.TankType.Contains(strTankTypeFind))&((t.Fuel.FuelType.Contains(strFuelTypeFind)))));
-            return View("Index", operations.ToPagedList(page, pageinfo.PageSize));
+            transferdata = (TransferData)Session["TransferData"];
+            int page = transferdata.OperationPage;
+            string strTankTypeFind = transferdata.strTankTypeFind;
+            string strFuelTypeFind = transferdata.strFuelTypeFind;
+            IEnumerable<Operation> operations = unitOfWork.Operations.Find(t => ((t.Tank.TankType.Contains(strTankTypeFind)) & ((t.Fuel.FuelType.Contains(strFuelTypeFind)))));
+
+            return View("Index", operations.ToPagedList(page, pageSize));
         }
 
         protected override void Dispose(bool disposing)
