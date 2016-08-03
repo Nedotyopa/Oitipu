@@ -98,9 +98,13 @@ namespace ToplivoCodeFirst.Controllers
             if (ModelState.IsValid)
             {
                 if (upload == null)
-                { unitOfWork.Tanks.Update(tank); }
+                {
+                    unitOfWork.Tanks.Update(tank);
+                }
                 else
-                { string filename = unitOfWork.Tanks.UpdateWithPicture(tank, upload); }
+                {
+                    string filename = unitOfWork.Tanks.UpdateWithPicture(tank, upload);
+                }
                 unitOfWork.Tanks.Save();
                 
             }
