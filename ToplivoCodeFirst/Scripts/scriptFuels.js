@@ -1,4 +1,8 @@
-﻿$(function () {
+﻿
+
+
+
+$(function () {
     $("#jqGrid").jqGrid({
         url: "/JQGridFuels/GetFuels",
         datatype: 'json',
