@@ -1,22 +1,27 @@
-﻿$(function () {
+﻿/// <reference path="jquery.jqGrid.js" />
+$(function () {
     $("#jqGrid").jqGrid({
-        url: "/JQGridFuels/GetFuels",
+        url: "/JQGridTanks/GetTanks",
         datatype: 'json',
         mtype: 'Get',
-        colNames: ['FuelID', 'Вид топлива', 'Плотность'],
+        colNames: ['TankID', 'Название', 'Объем', 'Вес', 'Материал', 'Изображение'],
         colModel: [
-            { key: true, hidden: true, name: 'FuelID', index: 'FuelID', editable: true },
-            { key: false, name: 'FuelType', index: 'FuelType', sortable: true, editable: true },
-            { key: false, name: 'FuelDensity', index: 'FuelDensity', editable: true }],
+            { key: true, hidden: true, name: 'TankID', index: 'TankID', editable: true },
+            { key: false, name: 'TankType', index: 'TankType', sortable: true, editable: true },
+            { key: false, name: 'TankVolume', index: 'TankVolume', editable: true },
+            { key: false, name: 'TankWeight', index: 'TankWeight', editable: true },
+            { key: false, name: 'TankMaterial', index: 'TankMaterial', editable: true },
+            { key: false, name: 'TankPicture', index: 'TankPicture', editable: true }
+                    ],
         pager: jQuery('#jqControls'),
-        rowNum: 10,
+        rowNum: 10,        
         rowList: [10, 20, 30, 40, 50],
-        sortname: "FuelType",
-        sortorder: "desc", // порядок сортировки,
+        sortname: "TankType",
+        sortorder: "desc",
         height: '100%',
         viewrecords: true,
-        caption: 'Виды топлива',
-        emptyrecords: 'Нет видов топлива для отображения',
+        caption: 'Емкости',
+        emptyrecords: 'Нет записей',
         jsonReader: {
             root: "rows",
             page: "page",
@@ -27,8 +32,7 @@
         },
         autowidth: true,
         multiselect: false
-    }).navGrid('#jqControls',
-    {
+    }).navGrid('#jqControls', {
         edit: true,
         edittext: "Редактировать",
         add: true,
@@ -42,7 +46,7 @@
     },
         {
             zIndex: 100,
-            url: '/JQGridFuels/Edit',
+            url: '/JQGridTanks/Edit',
             closeOnEscape: true,
             closeAfterEdit: true,
             recreateForm: true,
@@ -54,7 +58,7 @@
         },
         {
             zIndex: 100,
-            url: "/JQGridFuels/Create",
+            url: "/JQGridTanks/Create",
             closeOnEscape: true,
             closeAfterAdd: true,
             afterComplete: function (response) {
@@ -65,25 +69,22 @@
         },
         {
             zIndex: 100,
-            url: "/JQGridFuels/Delete",
+            url: "/JQGridTanks/Delete",
             closeOnEscape: true,
             closeAfterDelete: true,
             recreateForm: true,
-            msg: "Вы уверены, что хотите удалить запись? ",
+            msg: "Вы уверены, что хотите удалить... ? ",
             afterComplete: function (response) {
                 if (response.responseText) {
                     alert(response.responseText);
                 }
             }
+        },
+        {
+            zIndex: 100,
+            caption: "Поиск",
+            sopt: ['cn']
         });
-
-
-
-
-
-
-
-
-
-
 });
+
+

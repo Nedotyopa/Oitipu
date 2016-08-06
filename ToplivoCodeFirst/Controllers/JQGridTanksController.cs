@@ -1,56 +1,73 @@
-﻿using System;
+﻿using ToplivoCodeFirst.Models;
+using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using ToplivoCodeFirst.Models;
-using System.Data.Entity;
 
 namespace ToplivoCodeFirst.Controllers
 {
-    public class JQGridFuelsController : Controller
+    public class JQGridTanksController : Controller
     {
-        // GET: JQGridFuels
+        //
+        // GET: /JQGridTanks/
         public ActionResult Index()
         {
             return View();
         }
-
-
-        public JsonResult GetFuels(string sidx, string sortorder, int page, int rows)
+        public JsonResult GetTanks(string sidx, string sortorder, int page, int rows, bool _search, string searchField, string searchOper, string searchString)
         {
             ToplivoContext db = new ToplivoContext();
-            sortorder = (sortorder == null) ? "" : sortorder;
+            sortorder = (sortorder == null) ? "desc" : sortorder;
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
-            var FuelList = db.Fuels.Select(
+
+            var tanks = db.Tanks.Select(
                     t => new
                     {
-                        t.FuelID,
-                        t.FuelType,
-                        t.FuelDensity
+                        t.TankID,
+                        t.TankType,
+                        t.TankVolume,
+                        t.TankWeight,
+                        t.TankMaterial,
+                        t.TankPicture
                     });
-            int totalRecords = FuelList.Count();
+            if (_search)
+            {
+                switch (searchField)
+                {
+                    case "TankType":
+                        tanks = tanks.Where(t => t.TankType.Contains(searchString));
+                        break;
+                    case "TankMaterial":
+                        tanks = tanks.Where(t => t.TankMaterial.Contains(searchString));
+                        break;
+                                       
+                }
+            }
+            int totalRecords = tanks.Count();
             var totalPages = (int)Math.Ceiling((float)totalRecords / (float)rows);
             if (sortorder.ToUpper() == "DESC")
             {
-                FuelList = FuelList.OrderByDescending(t => t.FuelType);
-                FuelList = FuelList.Skip(pageIndex * pageSize).Take(pageSize);
+                tanks = tanks.OrderByDescending(t => t.TankType);
+                tanks = tanks.Skip(pageIndex * pageSize).Take(pageSize);
             }
             else
             {
-                FuelList = FuelList.OrderBy(t => t.FuelType);
-                FuelList = FuelList.Skip(pageIndex * pageSize).Take(pageSize);
+                tanks = tanks.OrderBy(t => t.TankType);
+                tanks = tanks.Skip(pageIndex * pageSize).Take(pageSize);
             }
             var jsonData = new
             {
                 total = totalPages,
                 page,
                 records = totalRecords,
-                rows = FuelList
+                rows = tanks
             };
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
+
         [HttpPost]
-        public string Create([Bind(Exclude = "FuelID")] Fuel Model)
+        public string Create( Tank Model)
         {
             ToplivoContext db = new ToplivoContext();
             string msg;
@@ -58,13 +75,13 @@ namespace ToplivoCodeFirst.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    db.Fuels.Add(Model);
+                    db.Tanks.Add(Model);
                     db.SaveChanges();
                     msg = "Сохранено";
                 }
                 else
                 {
-                    msg = "Модель не прошла валидацию";
+                    msg = "Ошибка валидации";
                 }
             }
             catch (Exception ex)
@@ -73,7 +90,7 @@ namespace ToplivoCodeFirst.Controllers
             }
             return msg;
         }
-        public string Edit(Fuel Model)
+        public string Edit(StudentMaster Model)
         {
             ToplivoContext db = new ToplivoContext();
             string msg;
@@ -87,7 +104,7 @@ namespace ToplivoCodeFirst.Controllers
                 }
                 else
                 {
-                    msg = "Модель не прошла валидацию";
+                    msg = "Ошибка валидации";
                 }
             }
             catch (Exception ex)
@@ -96,13 +113,13 @@ namespace ToplivoCodeFirst.Controllers
             }
             return msg;
         }
-        public string Delete(string id)
+        public string Delete(string Id)
         {
             ToplivoContext db = new ToplivoContext();
-            Fuel fuel = db.Fuels.Find(Convert.ToInt32(id));
-            db.Fuels.Remove(fuel);
+            Tank tank = db.Tanks.Find(Convert.ToInt32(Id));
+            db.Tanks.Remove(tank);
             db.SaveChanges();
-            return "Запись удалена";
+            return "Удалено";
         }
 
     }
