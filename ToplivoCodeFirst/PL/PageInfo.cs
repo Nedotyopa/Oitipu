@@ -22,7 +22,6 @@ namespace ToplivoCodeFirst.Models
             PageNumber = 1;
             PageSize = 20;
             TotalItems = 0;
-            SearchString = "";
         }
     }
 }

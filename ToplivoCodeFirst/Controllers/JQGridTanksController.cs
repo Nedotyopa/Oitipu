@@ -14,10 +14,10 @@ namespace ToplivoCodeFirst.Controllers
         {
             return View();
         }
-        public JsonResult GetTanks(string sidx, string sortorder, int page, int rows, bool _search, string searchField, string searchOper, string searchString)
+        public JsonResult GetTanks(string sidx, string sord, int page, int rows, bool _search, string searchField, string searchOper, string searchString)
         {
             ToplivoContext db = new ToplivoContext();
-            sortorder = (sortorder == null) ? "desc" : sortorder;
+            sord = (sord == null) ? "" : sord;
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
 
@@ -46,7 +46,7 @@ namespace ToplivoCodeFirst.Controllers
             }
             int totalRecords = tanks.Count();
             var totalPages = (int)Math.Ceiling((float)totalRecords / (float)rows);
-            if (sortorder.ToUpper() == "DESC")
+            if (sord.ToUpper() == "DESC")
             {
                 tanks = tanks.OrderByDescending(t => t.TankType);
                 tanks = tanks.Skip(pageIndex * pageSize).Take(pageSize);
@@ -67,7 +67,7 @@ namespace ToplivoCodeFirst.Controllers
         }
 
         [HttpPost]
-        public string Create( Tank Model)
+        public string Create([Bind(Exclude = "TankID")] Tank Model)
         {
             ToplivoContext db = new ToplivoContext();
             string msg;
@@ -90,7 +90,7 @@ namespace ToplivoCodeFirst.Controllers
             }
             return msg;
         }
-        public string Edit(StudentMaster Model)
+        public string Edit(Tank Model)
         {
             ToplivoContext db = new ToplivoContext();
             string msg;

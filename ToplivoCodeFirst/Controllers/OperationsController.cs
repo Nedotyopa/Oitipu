@@ -9,7 +9,8 @@ namespace ToplivoCodeFirst.Controllers
     public class OperationsController : Controller
     {
         UnitOfWork unitOfWork;
-        TransferData transferdata = new TransferData { TankPage = 1, FuelPage = 1, OperationPage = 1, strTankTypeFind = "", strFuelTypeFind = "" };
+        TransferData transferdata;     
+      
         int pageSize = 20;
         public OperationsController()
         {
@@ -18,8 +19,14 @@ namespace ToplivoCodeFirst.Controllers
         }
 
         // GET: Operations
-        public ActionResult Index(int page=1, string strTankTypeFind = "", string strFuelTypeFind = "")
+        public ActionResult Index( string strTankTypeFind, string strFuelTypeFind, int page = 1)
         {
+            transferdata = (TransferData)Session["TransferData"];
+
+
+            if (strTankTypeFind == null) { strTankTypeFind=transferdata.strTankTypeFind; };
+            if (strFuelTypeFind == null) { strFuelTypeFind = transferdata.strFuelTypeFind; };
+
             transferdata.OperationPage = page;
             transferdata.strTankTypeFind = strTankTypeFind;
             transferdata.strFuelTypeFind = strFuelTypeFind;

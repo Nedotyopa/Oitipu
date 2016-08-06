@@ -15,7 +15,7 @@
 { 
    <fieldset>
         Наименование емкости:        
-       @Html.TextBox("SearchString", Model.PageInfo.SearchString)
+       @Html.TextBox("SearchString", Model.PageInfo.SearchString ?? "")
        @Html.Hidden("PageNumber", Model.PageInfo.PageNumber)
         <input type="submit" value="Найти" />
     </fieldset>

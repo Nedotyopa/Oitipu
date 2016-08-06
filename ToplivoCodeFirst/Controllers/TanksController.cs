@@ -8,18 +8,22 @@ namespace ToplivoCodeFirst.Controllers
     public class TanksController : Controller
     {
         UnitOfWork unitOfWork;
-        TransferData transferdata = new TransferData { TankPage = 1, FuelPage = 1, OperationPage = 1, strTankTypeFind = "", strFuelTypeFind = "" };
+        TransferData transferdata;
 
         public TanksController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
-        }       
-        
-        
+
+        }
+
+
         // GET: Tanks        
         public ActionResult Index(PageInfo pageinfo)
         {
+
+            transferdata = (TransferData)Session["TransferData"];
+
             int page = pageinfo.PageNumber; string strsearch = pageinfo.SearchString ?? "";
 
             transferdata.TankPage =page ; transferdata.strTankTypeFind = strsearch;

@@ -7,7 +7,7 @@ namespace ToplivoCodeFirst.Controllers
     public class HomeController : Controller
     {
         UnitOfWork unitOfWork;
-        TransferData transferdata=new TransferData { TankPage=1, FuelPage=1, OperationPage=1, strTankTypeFind="", strFuelTypeFind=""};
+        TransferData transferdata=new TransferData { TankPage=1, FuelPage=1, OperationPage=1, strTankTypeFind="Цистерна", strFuelTypeFind="Нефть"};
 
         public HomeController()
         {
@@ -15,9 +15,10 @@ namespace ToplivoCodeFirst.Controllers
             unitOfWork = new UnitOfWork();
         }
 
-        public ActionResult Index(int pagesize = 10)
+        public ActionResult Index(int pagesize = 9)
         {
             //Инициализация временных переменных сессии для использования разными объектами
+            Session["TransferData"] = transferdata;
             int page = transferdata.OperationPage;
             ViewBag.NumberOperations = pagesize;
             //Получаем из БД  pagesize объектов Operation, при этом будут подгружаться данные из Tank и Fuel

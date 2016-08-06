@@ -46,6 +46,7 @@ namespace ToplivoCodeFirst.Models
         {
 
             int totalitems = db.Operations.Where(predicate).Count();
+            if ((int)Math.Ceiling((decimal)totalitems / totalitems) < page) { page = 1; };
             IEnumerable<Operation> operations = db.Operations.OrderBy(o => o.OperationID).Skip((page - 1) * pageSize).Take(pageSize).Include(o => o.Fuel).Include(o => o.Tank).Where(predicate);
             PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = totalitems };
             PagedCollection<Operation> viewoperations = new PagedCollection<Operation> { PageInfo = pageInfo, PagedItems = operations };
