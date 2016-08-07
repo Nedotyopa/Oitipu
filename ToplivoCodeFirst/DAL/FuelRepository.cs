@@ -43,10 +43,14 @@ namespace ToplivoCodeFirst.Models
 
         public PagedCollection<Fuel> GetNumberItems(Func<Fuel, bool> predicate, int page = 1, int pageSize = 30)
         {
-            int totalitems = db.Fuels.Where(predicate).Count();
+            IEnumerable<Fuel> fuels= db.Fuels.Where(predicate).OrderBy(o => o.FuelID);
+            int totalitems = fuels.Count();
             if ((int)Math.Ceiling((decimal)totalitems / totalitems) < page) { page = 1; };
-            IEnumerable<Fuel> fuels = db.Fuels.Where(predicate).OrderBy(o => o.FuelID).Skip((page - 1) * pageSize).Take(pageSize);
-            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = totalitems };
+            if (page != 0) 
+            {
+                fuels = fuels.Skip((page - 1) * pageSize).Take(pageSize);
+            };
+        PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = totalitems };
             PagedCollection<Fuel> viewfuels = new PagedCollection<Fuel> { PageInfo = pageInfo, PagedItems = fuels };
             return viewfuels;
         }

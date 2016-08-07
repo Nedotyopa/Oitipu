@@ -8,26 +8,43 @@ namespace ToplivoCodeFirst.Controllers
 {
     public class JQGridFuelsController : Controller
     {
+        //Объект для управления репозиториями
+        UnitOfWork unitOfWork;
+        //Объект для передачи данных, отражающих выбор пользователя
+        TransferData transferdata;
+        //Конструктор контроллера
+        public JQGridFuelsController()
+        {
+            // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
+            unitOfWork = new UnitOfWork();
+
+        }
+
+
         // GET: JQGridFuels
         public ActionResult Index()
         {
             return View();
         }
 
+ 
 
         public JsonResult GetFuels(string sidx, string sord, int page, int rows, bool _search, string searchField, string searchOper, string searchString)
         {
-            ToplivoContext db = new ToplivoContext();
+
+            transferdata.FuelPage = page; transferdata.strFuelTypeFind = searchString;
+            Session["TransferData"] = transferdata;
             sord = (sord == null) ? "" : sord;
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
-            var fuels = db.Fuels.Select(
+            var fuels = unitOfWork.Fuels.GetAll().Select(
                     t => new
                     {
                         t.FuelID,
                         t.FuelType,
-                        t.FuelDensity
+                        t.FuelDensity,
                     });
+
             if (_search)
             {
                 switch (searchField)
