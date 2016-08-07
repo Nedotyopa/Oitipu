@@ -7,9 +7,11 @@ namespace ToplivoCodeFirst.Controllers
 {
     public class TanksController : Controller
     {
+        //Объект для управления репозиториями
         UnitOfWork unitOfWork;
+        //Объект для передачи данных, отражающих выбор пользователя
         TransferData transferdata;
-
+        //Конструктор контроллера
         public TanksController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 

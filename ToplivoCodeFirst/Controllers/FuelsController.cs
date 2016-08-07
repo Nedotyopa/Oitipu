@@ -9,14 +9,15 @@ namespace ToplivoCodeFirst.Controllers
 {
     public class FuelsController : Controller
     {
+        //Объект для управления репозиториями
         UnitOfWork unitOfWork;
+        //Объект для передачи данных, отражающих выбор пользователя
         TransferData transferdata;
-
+        //Конструктор контроллера
         public FuelsController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
-
 
         }
         // GET: Fuels

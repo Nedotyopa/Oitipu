@@ -6,13 +6,16 @@ namespace ToplivoCodeFirst.Controllers
 
     public class HomeController : Controller
     {
+        //Объект для управления репозиториями
         UnitOfWork unitOfWork;
-        TransferData transferdata=new TransferData { TankPage=1, FuelPage=1, OperationPage=1, strTankTypeFind="Цистерна", strFuelTypeFind="Нефть"};
-
+        //Объект для передачи данных, отражающих выбор пользователя
+        TransferData transferdata = new TransferData { TankPage = 1, FuelPage = 1, OperationPage = 1, strTankTypeFind = "Цистерна", strFuelTypeFind = "Нефть" };
+        //Конструктор контроллера
         public HomeController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
+
         }
 
         public ActionResult Index(int pagesize = 9)

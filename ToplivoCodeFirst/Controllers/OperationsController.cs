@@ -8,14 +8,18 @@ namespace ToplivoCodeFirst.Controllers
 {
     public class OperationsController : Controller
     {
-        UnitOfWork unitOfWork;
-        TransferData transferdata;     
-      
+        
         int pageSize = 20;
+        //Объект для управления репозиториями
+        UnitOfWork unitOfWork;
+        //Объект для передачи данных, отражающих выбор пользователя
+        TransferData transferdata;
+        //Конструктор контроллера
         public OperationsController()
         {
             // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
             unitOfWork = new UnitOfWork();
+
         }
 
         // GET: Operations
