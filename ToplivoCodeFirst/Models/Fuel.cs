@@ -22,10 +22,6 @@ namespace ToplivoCodeFirst.Models
         //Коллекция объектов Operation, связанных с моделью
         public virtual ICollection<Operation> Operations { get; set; }
         
-        //Конструктор модели
-        public Fuel()
-        {
-            Operations = new List<Operation>();
-        }
+ 
     }
 }

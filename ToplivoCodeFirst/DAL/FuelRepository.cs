@@ -50,7 +50,7 @@ namespace ToplivoCodeFirst.Models
             {
                 fuels = fuels.Skip((page - 1) * pageSize).Take(pageSize);
             };
-        PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = totalitems };
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = totalitems };
             PagedCollection<Fuel> viewfuels = new PagedCollection<Fuel> { PageInfo = pageInfo, PagedItems = fuels };
             return viewfuels;
         }
