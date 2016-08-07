@@ -75,7 +75,14 @@
                     alert(response.responseText);
                 }
             }
-        });
+        },
+        {
+            zIndex: 100,
+            caption: "Поиск",
+            sopt: ['cn']
+        }
+
+        );
 
 
 

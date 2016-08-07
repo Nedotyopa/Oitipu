@@ -8,7 +8,17 @@ namespace ToplivoCodeFirst.Controllers
 {
     public class JQGridTanksController : Controller
     {
-        //
+        //Объект для управления репозиториями
+        UnitOfWork unitOfWork;
+        //Объект для передачи данных, отражающих выбор пользователя
+        TransferData transferdata;
+        //Конструктор контроллера
+        public JQGridTanksController()
+        {
+            // создаем экземпляр класса UnitOfWork, через свойства которого получим доступ к репозитариям 
+            unitOfWork = new UnitOfWork();
+
+        }
         // GET: /JQGridTanks/
         public ActionResult Index()
         {
@@ -16,12 +26,13 @@ namespace ToplivoCodeFirst.Controllers
         }
         public JsonResult GetTanks(string sidx, string sord, int page, int rows, bool _search, string searchField, string searchOper, string searchString)
         {
-            ToplivoContext db = new ToplivoContext();
+            transferdata.FuelPage = page; transferdata.strFuelTypeFind = searchString;
+            Session["TransferData"] = transferdata;
             sord = (sord == null) ? "" : sord;
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
 
-            var tanks = db.Tanks.Select(
+            var tanks = unitOfWork.Tanks.GetAll().Select(
                     t => new
                     {
                         t.TankID,
@@ -69,14 +80,13 @@ namespace ToplivoCodeFirst.Controllers
         [HttpPost]
         public string Create([Bind(Exclude = "TankID")] Tank Model)
         {
-            ToplivoContext db = new ToplivoContext();
             string msg;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    db.Tanks.Add(Model);
-                    db.SaveChanges();
+                    unitOfWork.Tanks.Create(Model);
+                    unitOfWork.Tanks.Save();
                     msg = "Сохранено";
                 }
                 else
@@ -92,14 +102,13 @@ namespace ToplivoCodeFirst.Controllers
         }
         public string Edit(Tank Model)
         {
-            ToplivoContext db = new ToplivoContext();
             string msg;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    db.Entry(Model).State = EntityState.Modified;
-                    db.SaveChanges();
+                    unitOfWork.Tanks.Update(Model);
+                    unitOfWork.Tanks.Save();
                     msg = "Сохранено";
                 }
                 else
@@ -115,10 +124,8 @@ namespace ToplivoCodeFirst.Controllers
         }
         public string Delete(string Id)
         {
-            ToplivoContext db = new ToplivoContext();
-            Tank tank = db.Tanks.Find(Convert.ToInt32(Id));
-            db.Tanks.Remove(tank);
-            db.SaveChanges();
+            unitOfWork.Tanks.Delete(Convert.ToInt32(Id));
+            unitOfWork.Tanks.Save();
             return "Удалено";
         }
 

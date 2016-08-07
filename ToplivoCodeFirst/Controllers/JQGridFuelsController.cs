@@ -20,18 +20,14 @@ namespace ToplivoCodeFirst.Controllers
 
         }
 
-
         // GET: JQGridFuels
         public ActionResult Index()
         {
             return View();
         }
 
- 
-
         public JsonResult GetFuels(string sidx, string sord, int page, int rows, bool _search, string searchField, string searchOper, string searchString)
         {
-
             transferdata.FuelPage = page; transferdata.strFuelTypeFind = searchString;
             Session["TransferData"] = transferdata;
             sord = (sord == null) ? "" : sord;
@@ -55,7 +51,6 @@ namespace ToplivoCodeFirst.Controllers
                     
                 }
             }
-
 
             int totalRecords = fuels.Count();
             var totalPages = (int)Math.Ceiling((float)totalRecords / (float)rows);
@@ -81,14 +76,14 @@ namespace ToplivoCodeFirst.Controllers
         [HttpPost]
         public string Create([Bind(Exclude = "FuelID")] Fuel Model)
         {
-            ToplivoContext db = new ToplivoContext();
+            
             string msg;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    db.Fuels.Add(Model);
-                    db.SaveChanges();
+                    unitOfWork.Fuels.Create(Model);
+                    unitOfWork.Fuels.Save();
                     msg = "Сохранено";
                 }
                 else
@@ -104,14 +99,13 @@ namespace ToplivoCodeFirst.Controllers
         }
         public string Edit(Fuel Model)
         {
-            ToplivoContext db = new ToplivoContext();
             string msg;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    db.Entry(Model).State = EntityState.Modified;
-                    db.SaveChanges();
+                    unitOfWork.Fuels.Update(Model);
+                    unitOfWork.Fuels.Save();
                     msg = "Сохранено";
                 }
                 else
@@ -127,10 +121,8 @@ namespace ToplivoCodeFirst.Controllers
         }
         public string Delete(string id)
         {
-            ToplivoContext db = new ToplivoContext();
-            Fuel fuel = db.Fuels.Find(Convert.ToInt32(id));
-            db.Fuels.Remove(fuel);
-            db.SaveChanges();
+            unitOfWork.Fuels.Delete(Convert.ToInt32(id));
+            unitOfWork.Fuels.Save();
             return "Запись удалена";
         }
 
