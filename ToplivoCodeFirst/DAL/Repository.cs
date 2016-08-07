@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using ToplivoCodeFirst.Models;
 
 namespace ToplivoCodeFirst.Models
 {
     public class Repository<T> : IRepository<T> where T : class
     {
         private ToplivoContext db;
+        //Конструктор класса
         public Repository(ToplivoContext context)
         {
             db = context;
         }
-
+        //Создать новый об'ект
         public void Create(T item)
         {
             db.Set<T>().Add(item);
         }
-
+        //Удалить объект
         public void Delete(int id)
         {
             T item = db.Set<T>().Find(id);
@@ -28,27 +27,28 @@ namespace ToplivoCodeFirst.Models
                 db.Set<T>().Remove(item);
             }
         }
-
+        //Возвращает коллекцию объектов, удовлетворяющих заданному условию
         public IEnumerable<T> Find(Func<T, bool> predicate)
         {
             return db.Set<T>().Where(predicate).ToList();
         }
-
+        //Возвращает один объект, выбранный по заданному ключу
         public T Get(int id)
         {
             return db.Set<T>().Find(id);
         }
-
+        //Возвращает коллкцию из всех объектов 
         public IEnumerable<T> GetAll()
         {
             return db.Set<T>();
         }
-
+        //Возвращает коллекцию об'ектов, удовлетворяющих заданному условию, для размещения на странице заданного размера и номера
         public PagedCollection<T> GetNumberItems(Func<T, bool> predicate, int page = 1, int pageSize = 30)
         {
             IEnumerable<T> items = db.Set<T>().Where(predicate).OrderBy(t => t);
             int totalitems = items.Count();
             if ((int)Math.Ceiling((decimal)totalitems / totalitems) < page) { page = 1; };
+            //Если параметр page=0 разбиения будут возвращаться все объекты
             if (page != 0)
             {
                 items = items.Skip((page - 1) * pageSize).Take(pageSize);
@@ -57,12 +57,12 @@ namespace ToplivoCodeFirst.Models
             PagedCollection<T> viewfuels = new PagedCollection<T> { PageInfo = pageInfo, PagedItems = items };
             return viewfuels;
         }
-
+        //Сохранение сделанных изменений
         public void Save()
         {
             db.SaveChanges();
         }
-
+        //Обновление объекта
         public void Update(T item)
         {
             db.Entry(item).State = EntityState.Modified;
