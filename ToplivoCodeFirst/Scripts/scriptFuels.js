@@ -7,7 +7,7 @@
         colModel: [
             { key: true, hidden: true, name: 'FuelID', index: 'FuelID', editable: true },
             { key: false, name: 'FuelType', index: 'FuelType', sortable: true, editable: true },
-            { key: false, name: 'FuelDensity', index: 'FuelDensity', editable: true }],
+            { key: false, name: 'FuelDensity', index: 'FuelDensity', formatter:'number', formatoptions:{decimalSeparator:"."}, editable: true }],
         pager: jQuery('#jqControls'),
         rowNum: 10,
         rowList: [10, 20, 30, 40, 50],

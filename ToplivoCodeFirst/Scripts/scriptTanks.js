@@ -8,10 +8,10 @@ $(function () {
         colModel: [
             { key: true, hidden: true, name: 'TankID', index: 'TankID', editable: true },
             { key: false, name: 'TankType', index: 'TankType', sortable: true, editable: true },
-            { key: false, name: 'TankVolume', index: 'TankVolume', editable: true },
-            { key: false, name: 'TankWeight', index: 'TankWeight', editable: true },
+            { key: false, name: 'TankVolume', index: 'TankVolume', formatter: 'number', formatoptions: { decimalSeparator: "," }, editable: true, editable: true },
+            { key: false, name: 'TankWeight', index: 'TankWeight', formatter: 'number', formatoptions: { decimalSeparator: "," }, editable: true },
             { key: false, name: 'TankMaterial', index: 'TankMaterial', editable: true },
-            { key: false, name: 'TankPicture', index: 'TankPicture', editable: true }
+            { key: false, name: 'TankPicture', index: 'TankPicture', edittype: 'file', editable: true }
                     ],
         pager: jQuery('#jqControls'),
         rowNum: 10,        
