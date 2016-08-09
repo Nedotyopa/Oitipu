@@ -35,6 +35,8 @@ $(function () {
     }).navGrid('#jqControls', {
         edit: true,
         edittext: "Редактировать",
+        view: true,
+        viewtext: "Смотреть",
         add: true,
         addtext: "Добавить",
         del: true,

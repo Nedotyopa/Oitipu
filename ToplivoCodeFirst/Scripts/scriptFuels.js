@@ -7,7 +7,7 @@
         colModel: [
             { key: true, hidden: true, name: 'FuelID', index: 'FuelID', editable: true },
             { key: false, name: 'FuelType', index: 'FuelType', sortable: true, editable: true },
-            { key: false, name: 'FuelDensity', index: 'FuelDensity', formatter:'number', formatoptions:{decimalSeparator:"."}, editable: true }],
+            { key: false, name: 'FuelDensity', index: 'FuelDensity', formatter:'number', formatoptions : {decimalSeparator:",", thousandsSeparator: " ", decimalPlaces: 2, defaultValue: '0,00'}, editable: true }],
         pager: jQuery('#jqControls'),
         rowNum: 10,
         rowList: [10, 20, 30, 40, 50],
@@ -31,6 +31,8 @@
     {
         edit: true,
         edittext: "Редактировать",
+        view: true,
+        viewtext: "Смотреть",
         add: true,
         addtext: "Добавить",
         del: true,
