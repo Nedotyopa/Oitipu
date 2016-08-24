@@ -3,15 +3,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="jumbotron">
-    <h1>Топливная база</h1>
-    <h2>Последние  @ViewBag.NumberOperations операций</h2>
 <table border="0" width="70%">
 <tr>
     <td valign="top">
-        <img src="~/Images/main.jpg" />
-
+        <img src="~/Images/main.jpg" width="50" height="50" />
     </td>
-    <td valign="top">
+
+    <td><h1>Топливная база</h1></td> 
+
+</tr>
+<tr>
+    <td valign="top" colspan="2">
+        <h2>Последние  @ViewBag.NumberOperations операций</h2>
+
         <table border="1" class="table">
             <tr>
                 <th>Номер</th>

@@ -18,7 +18,7 @@ namespace ToplivoCodeFirst.Controllers
 
         }
 
-        public ActionResult Index(int pagesize = 9)
+        public ActionResult Index(int pagesize = 10)
         {
             //Инициализация временных переменных сессии для использования разными объектами
             Session["TransferData"] = transferdata;

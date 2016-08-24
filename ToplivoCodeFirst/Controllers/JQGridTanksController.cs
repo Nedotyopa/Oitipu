@@ -29,6 +29,9 @@ namespace ToplivoCodeFirst.Controllers
             transferdata.FuelPage = page; transferdata.strFuelTypeFind = searchString;
             Session["TransferData"] = transferdata;
             sord = (sord == null) ? "" : sord;
+
+            sord = (sord == null) ? "" : sord;
+
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
 
@@ -57,16 +60,27 @@ namespace ToplivoCodeFirst.Controllers
             }
             int totalRecords = tanks.Count();
             var totalPages = (int)Math.Ceiling((float)totalRecords / (float)rows);
-            if (sord.ToUpper() == "DESC")
+
+            string sortOrder = sidx + " " + sord.ToUpper();
+            switch (sortOrder)
             {
-                tanks = tanks.OrderByDescending(t => t.TankType);
-                tanks = tanks.Skip(pageIndex * pageSize).Take(pageSize);
+                case "TankMaterial ASC":
+                    tanks = tanks.OrderBy(s => s.TankMaterial);
+                    break;
+                case "TankType ASC":
+                    tanks = tanks.OrderBy(s => s.TankType);
+                    break;
+                case "TankMaterial DESC":
+                    tanks = tanks.OrderByDescending(s => s.TankMaterial);
+                    break;
+                default:
+                    tanks = tanks.OrderByDescending(s => s.TankType);
+                    break;
             }
-            else
-            {
-                tanks = tanks.OrderBy(t => t.TankType);
-                tanks = tanks.Skip(pageIndex * pageSize).Take(pageSize);
-            }
+            
+            tanks = tanks.Skip(pageIndex * pageSize).Take(pageSize);
+
+
             var jsonData = new
             {
                 total = totalPages,

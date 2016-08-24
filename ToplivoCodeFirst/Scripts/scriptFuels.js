@@ -7,10 +7,10 @@
         colModel: [
             { key: true, hidden: true, name: 'FuelID', index: 'FuelID', editable: true },
             { key: false, name: 'FuelType', index: 'FuelType', sortable: true, editable: true },
-            { key: false, name: 'FuelDensity', index: 'FuelDensity', formatter:'number', formatoptions : {decimalSeparator:",", thousandsSeparator: " ", decimalPlaces: 2, defaultValue: '0,00'}, editable: true }],
+            { key: false, name: 'FuelDensity', index: 'FuelDensity', formatter: 'number', formatoptions: { decimalSeparator: "," }, unformat: unformatNumber, editable: true, search: false }],
         pager: jQuery('#jqControls'),
         rowNum: 10,
-        rowList: [10, 20, 30, 40, 50],
+        rowList: [15, 25, 35, 45],
         sortname: "FuelType",
         sortorder: "desc", // порядок сортировки,
         height: '100%',
@@ -96,3 +96,7 @@
 
 
 });
+function unformatNumber(cellvalue, options) {
+
+    return cellvalue.replace(".", ",");
+}
