@@ -9,7 +9,7 @@ namespace ToplivoCodeFirst.Controllers
     public class OperationsController : Controller
     {
         
-        int pageSize = 20;
+        int pageSize = 15;
         //Объект для управления репозиториями
         UnitOfWork unitOfWork;
         //Объект для передачи данных, отражающих выбор пользователя

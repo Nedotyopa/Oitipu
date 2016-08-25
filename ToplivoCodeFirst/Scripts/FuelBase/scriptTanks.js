@@ -14,7 +14,7 @@ $(function () {
             { key: false, name: 'TankPicture', index: 'TankPicture', sortable: false, edittype: 'file', editable: true, formatter: imageFormat, search: false }
                     ],
         pager: jQuery('#jqControls'),
-        rowNum: 10,        
+        rowNum: 15,        
         rowList: [15, 25, 35, 45],
         sortname: "TankType",
         sortorder: "desc",

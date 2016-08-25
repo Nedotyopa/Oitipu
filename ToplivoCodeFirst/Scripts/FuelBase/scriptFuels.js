@@ -9,7 +9,7 @@
             { key: false, name: 'FuelType', index: 'FuelType', sortable: true, editable: true },
             { key: false, name: 'FuelDensity', index: 'FuelDensity', formatter: 'number', formatoptions: { decimalSeparator: "," }, unformat: unformatNumber, editable: true, search: false }],
         pager: jQuery('#jqControls'),
-        rowNum: 10,
+        rowNum: 15,
         rowList: [15, 25, 35, 45],
         sortname: "FuelType",
         sortorder: "desc", // порядок сортировки,

@@ -10,7 +10,7 @@ namespace ToplivoCodeFirst.Models
     {
         protected override void Seed(ToplivoContext db)
         {
-            string readPath = HttpContext.Current.Server.MapPath("~") + "/FillDB.sql";
+            string readPath = HttpContext.Current.Server.MapPath("~") + "/Scripts/FuelBase/FillDB.sql";
             string SQLstring = "";
             try
             {
