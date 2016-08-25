@@ -28,8 +28,8 @@ namespace ToplivoCodeFirst.Controllers
             transferdata = (TransferData)Session["TransferData"];
 
 
-            if (strTankTypeFind == null) { strTankTypeFind=transferdata.strTankTypeFind; };
-            if (strFuelTypeFind == null) { strFuelTypeFind = transferdata.strFuelTypeFind; };
+            if (strTankTypeFind == null) { strTankTypeFind=transferdata.strTankTypeFind ?? ""; };
+            if (strFuelTypeFind == null) { strFuelTypeFind = transferdata.strFuelTypeFind ?? ""; };
 
             transferdata.OperationPage = page;
             transferdata.strTankTypeFind = strTankTypeFind;

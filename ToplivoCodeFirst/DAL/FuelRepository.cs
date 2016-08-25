@@ -41,11 +41,11 @@ namespace ToplivoCodeFirst.Models
             return db.Fuels;
         }
 
-        public PagedCollection<Fuel> GetNumberItems(Func<Fuel, bool> predicate, int page = 1, int pageSize = 30)
+        public PagedCollection<Fuel> GetNumberItems(Func<Fuel, bool> predicate, int page = 1, int pageSize = 20)
         {
             IEnumerable<Fuel> fuels= db.Fuels.Where(predicate).OrderBy(o => o.FuelID);
             int totalitems = fuels.Count();
-            if ((int)Math.Ceiling((decimal)totalitems / totalitems) < page) { page = 1; };
+            if ((int)Math.Ceiling((decimal)totalitems / pageSize) < page) { page = 1; };
             if (page != 0) 
             {
                 fuels = fuels.Skip((page - 1) * pageSize).Take(pageSize);

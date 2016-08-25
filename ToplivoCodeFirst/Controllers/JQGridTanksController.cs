@@ -54,8 +54,7 @@ namespace ToplivoCodeFirst.Controllers
                         break;
                     case "TankMaterial":
                         tanks = tanks.Where(t => t.TankMaterial.Contains(searchString));
-                        break;
-                                       
+                        break;                                       
                 }
             }
             int totalRecords = tanks.Count();
