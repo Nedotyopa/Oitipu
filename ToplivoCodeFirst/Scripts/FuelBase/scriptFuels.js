@@ -86,15 +86,6 @@
 
         );
 
-
-
-
-
-
-
-
-
-
 });
 function unformatNumber(cellvalue, options) {
 

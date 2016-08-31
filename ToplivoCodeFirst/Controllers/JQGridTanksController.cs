@@ -3,6 +3,7 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web;
 
 namespace ToplivoCodeFirst.Controllers
 {
@@ -141,6 +142,36 @@ namespace ToplivoCodeFirst.Controllers
             unitOfWork.Tanks.Save();
             return "Удалено";
         }
+        [HttpPost]
+        public string Upload()
+        {
+            string id = Request.Params.GetValues("id").FirstOrDefault();
+            string fileName="";
+            var tank = unitOfWork.Tanks.Get(Convert.ToInt32(id));
+
+            foreach (string file in Request.Files)
+            {
+                var upload = Request.Files[file];
+                if (upload != null)
+                {
+                    // получаем имя файла
+                    //fileName = id + System.IO.Path.GetExtension(upload.FileName);
+
+                    // сохраняем файл в папку Images
+                    fileName = unitOfWork.Tanks.UpdateWithPicture(tank, upload);
+                    //// получаем имя файла
+                    //fileName = id + System.IO.Path.GetExtension(upload.FileName);
+
+                    //// сохраняем файл в папку Images
+                    //upload.SaveAs(Server.MapPath("~/Images/" + fileName));
+
+                }
+            }
+            unitOfWork.Tanks.Save();
+            return "файл загружен";
+        }
+
+
 
     }
 }
