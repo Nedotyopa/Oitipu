@@ -31,8 +31,6 @@ namespace ToplivoCodeFirst.Controllers
             Session["TransferData"] = transferdata;
             sord = (sord == null) ? "" : sord;
 
-            sord = (sord == null) ? "" : sord;
-
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
 
@@ -117,10 +115,13 @@ namespace ToplivoCodeFirst.Controllers
         public string Edit(Tank Model)
         {
             string msg;
+            var tank_old = unitOfWork.Tanks.Get(Convert.ToInt32(Model.TankID));
+            string TankPicture = tank_old.TankPicture;
             try
             {
                 if (ModelState.IsValid)
                 {
+                    Model.TankPicture = TankPicture;
                     unitOfWork.Tanks.Update(Model);
                     unitOfWork.Tanks.Save();
                     msg = "Сохранено";
@@ -154,16 +155,8 @@ namespace ToplivoCodeFirst.Controllers
                 var upload = Request.Files[file];
                 if (upload != null)
                 {
-                    // получаем имя файла
-                    //fileName = id + System.IO.Path.GetExtension(upload.FileName);
-
-                    // сохраняем файл в папку Images
+ 
                     fileName = unitOfWork.Tanks.UpdateWithPicture(tank, upload);
-                    //// получаем имя файла
-                    //fileName = id + System.IO.Path.GetExtension(upload.FileName);
-
-                    //// сохраняем файл в папку Images
-                    //upload.SaveAs(Server.MapPath("~/Images/" + fileName));
 
                 }
             }
