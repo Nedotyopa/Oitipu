@@ -115,15 +115,12 @@ namespace ToplivoCodeFirst.Controllers
         public string Edit(Tank Model)
         {
             string msg;
-            var tank_old = unitOfWork.Tanks.Get(Convert.ToInt32(Model.TankID));
-            string TankPicture = tank_old.TankPicture;
+
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Model.TankPicture = TankPicture;
-                    unitOfWork.Tanks.Update(Model);
-                    unitOfWork.Tanks.Save();
+ 
                     msg = "Сохранено";
                 }
                 else
@@ -144,11 +141,9 @@ namespace ToplivoCodeFirst.Controllers
             return "Удалено";
         }
         [HttpPost]
-        public string Upload()
+        public string Upload(Tank tank)
         {
-            string id = Request.Params.GetValues("id").FirstOrDefault();
             string fileName="";
-            var tank = unitOfWork.Tanks.Get(Convert.ToInt32(id));
 
             foreach (string file in Request.Files)
             {
@@ -158,9 +153,10 @@ namespace ToplivoCodeFirst.Controllers
  
                     fileName = unitOfWork.Tanks.UpdateWithPicture(tank, upload);
 
+                    unitOfWork.Tanks.Save();
+
                 }
             }
-            unitOfWork.Tanks.Save();
             return "файл загружен";
         }
 

@@ -57,7 +57,12 @@ $(function () {
                 if (files.length > 0) {
                     if (window.FormData !== undefined) {
                         var data = new FormData();
-                        data.append("id", document.getElementById('TankID').value);
+                        data.append("TankID", document.getElementById('TankID').value);
+                        data.append("TankType", document.getElementById('TankType').value);
+                        data.append("TankVolume", document.getElementById('TankVolume').value);
+                        data.append("TankWeight", document.getElementById('TankWeight').value);
+                        data.append("TankMaterial", document.getElementById('TankMaterial').value);
+
                         for (var x = 0; x < files.length; x++) {
                             data.append("file" + x, files[x]);
                         }
