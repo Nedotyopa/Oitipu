@@ -152,7 +152,12 @@ namespace ToplivoCodeFirst.Controllers
                 {
  
                     fileName = unitOfWork.Tanks.UpdateWithPicture(tank, upload);
+                    unitOfWork.Tanks.Save();
 
+                }
+                else
+                {
+                    unitOfWork.Tanks.Update(tank);
                     unitOfWork.Tanks.Save();
 
                 }

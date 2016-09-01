@@ -4,14 +4,15 @@ $(function () {
         url: "/JQGridTanks/GetTanks",
         datatype: 'json',
         mtype: 'Get',
-        colNames: ['TankID', 'Емкость', 'Объем', 'Вес', 'Материал', 'Изображение'],
+        colNames: ['TankID', 'Емкость', 'Объем', 'Вес', 'Материал', 'Изображение', 'Файл'],
         colModel: [
             { key: true, hidden: true, name: 'TankID', index: 'TankID', editable: true },
             { key: false, name: 'TankType', index: 'TankType', sortable: true, editable: true, search: true},
             { key: false, name: 'TankVolume', index: 'TankVolume', sortable: false, formatter: 'number', formatoptions: { decimalSeparator: "," }, unformat: unformatNumber1, editable: true, search: false},
             { key: false, name: 'TankWeight', index: 'TankWeight', sortable: false, formatter: 'number', formatoptions: { decimalSeparator: "," }, unformat: unformatNumber2, editable: true, search: false },
             { key: false, name: 'TankMaterial', index: 'TankMaterial', sortable: true, editable: true, search: true },
-            { key: false, name: 'TankPicture', index: 'TankPicture', sortable: false, edittype: 'file', editable: true, formatter: imageFormat, search: false }
+            { key: false, name: 'TankPicture', index: 'TankPicture', editable: true, formatter: imageFormat, unformat: unformatFile},
+            { key: false, name: 'TankPictureFile', index: 'TankPictureFile', sortable: false, edittype: 'file', editable: true,  search: false }
                     ],
         pager: jQuery('#jqControls'),
         rowNum: 15,        
@@ -53,7 +54,7 @@ $(function () {
             closeAfterEdit: true,
             recreateForm: true,
             onclickSubmit: function (params) {
-                var files = document.getElementById('TankPicture').files;
+                var files = document.getElementById('TankPictureFile').files;
                 if (files.length > 0) {
                     if (window.FormData !== undefined) {
                         var data = new FormData();
@@ -62,7 +63,7 @@ $(function () {
                         data.append("TankVolume", document.getElementById('TankVolume').value);
                         data.append("TankWeight", document.getElementById('TankWeight').value);
                         data.append("TankMaterial", document.getElementById('TankMaterial').value);
-
+                        data.append("TankPictureFile", document.getElementById('TankPictureFile').value);                        
                         for (var x = 0; x < files.length; x++) {
                             data.append("file" + x, files[x]);
                         }
@@ -129,7 +130,10 @@ function unformatNumber2(cellvalue, options) {
 
     return cellvalue.replace(".", ",");
 }
+function unformatFile(cellvalue, options) {
 
+    return cellvalue;
+}
 function imageFormat(cellvalue, options, rowObject) {
     return '<img src=/Images/' + cellvalue + ' alt="Фотография отсутствует" width="25" height="25">';
 }
