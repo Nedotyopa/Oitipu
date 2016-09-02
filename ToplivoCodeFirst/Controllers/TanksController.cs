@@ -148,7 +148,7 @@ namespace ToplivoCodeFirst.Controllers
         {
             transferdata =(TransferData)Session["TransferData"];
             int page = transferdata.TankPage;
-            string searchstring = transferdata.strTankTypeFind;
+            string searchstring = transferdata.strTankTypeFind??"";
             PagedCollection<Tank> pagedcollection = unitOfWork.Tanks.GetNumberItems(t => (t.TankType.Contains(searchstring)),page);
             pagedcollection.PageInfo.SearchString = searchstring;
 

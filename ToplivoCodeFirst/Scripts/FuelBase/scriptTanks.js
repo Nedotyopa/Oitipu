@@ -130,10 +130,10 @@ function unformatNumber2(cellvalue, options) {
 
     return cellvalue.replace(".", ",");
 }
-function unformatFile(cellvalue, options) {
 
-    return cellvalue;
+function unformatFile(cellValue, options, cellObject) {
+    return $('img', cellObject).attr('src');
 }
 function imageFormat(cellvalue, options, rowObject) {
-    return '<img src=/Images/' + cellvalue + ' alt="Фотография отсутствует" width="25" height="25">';
+    return '<img src=' + cellvalue + ' alt="Фотография отсутствует" width="25" height="25">';
 }

@@ -24,9 +24,9 @@ namespace ToplivoCodeFirst.Models
             if (upload != null)
             {
                 // формируем имя файла
-                fileName = tank.TankID.ToString() + System.IO.Path.GetExtension(upload.FileName);
+                fileName = "/Images/" + tank.TankID.ToString() + System.IO.Path.GetExtension(upload.FileName);
                 // сохраняем файл в папку Images в приложении
-                upload.SaveAs(HttpContext.Current.Server.MapPath("~/Images/" + fileName));
+                upload.SaveAs(HttpContext.Current.Server.MapPath(fileName));
             }
             tank.TankPicture = fileName;
             Create(tank);
@@ -39,9 +39,9 @@ namespace ToplivoCodeFirst.Models
             if (upload != null)
             {
                 // формируем имя файла
-                fileName = tank.TankID.ToString() + System.IO.Path.GetExtension(upload.FileName);
+                fileName = "/Images/" + tank.TankID.ToString() + System.IO.Path.GetExtension(upload.FileName);
                 // сохраняем файл в папку Images в приложении
-                upload.SaveAs(HttpContext.Current.Server.MapPath("~/Images/" + fileName));
+                upload.SaveAs(HttpContext.Current.Server.MapPath(fileName));
             }
             tank.TankPicture = fileName;
             Update(tank);
