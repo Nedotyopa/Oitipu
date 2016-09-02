@@ -12,7 +12,7 @@ $(function () {
             { key: false, name: 'TankWeight', index: 'TankWeight', sortable: false, formatter: 'number', formatoptions: { decimalSeparator: "," }, unformat: unformatNumber2, editable: true, search: false },
             { key: false, name: 'TankMaterial', index: 'TankMaterial', sortable: true, editable: true, search: true },
             { key: false, name: 'TankPicture', index: 'TankPicture', editable: true, formatter: imageFormat, unformat: unformatFile},
-            { key: false, name: 'TankPictureFile', index: 'TankPictureFile', sortable: false, edittype: 'file', editable: true,  search: false }
+            { key: false, name: 'TankPictureFile', index: 'TankPictureFile', width:1, sortable: false, edittype: 'file', editable: true,  search: false }
                     ],
         pager: jQuery('#jqControls'),
         rowNum: 15,        
@@ -63,7 +63,7 @@ $(function () {
                         data.append("TankVolume", document.getElementById('TankVolume').value);
                         data.append("TankWeight", document.getElementById('TankWeight').value);
                         data.append("TankMaterial", document.getElementById('TankMaterial').value);
-                        data.append("TankPictureFile", document.getElementById('TankPictureFile').value);                        
+                        data.append("TankPicture", document.getElementById('TankPicture').value);                        
                         if (files.length > 0) {
                             for (var x = 0; x < files.length; x++) {
                                 data.append("file" + x, files[x]);
