@@ -42,8 +42,8 @@ namespace ToplivoCodeFirst.Models
                 fileName = "/Images/" + tank.TankID.ToString() + System.IO.Path.GetExtension(upload.FileName);
                 // сохраняем файл в папку Images в приложении
                 upload.SaveAs(HttpContext.Current.Server.MapPath(fileName));
+                tank.TankPicture = fileName;
             }
-            tank.TankPicture = fileName;
             Update(tank);
             return fileName;
         }

@@ -55,7 +55,7 @@ $(function () {
             recreateForm: true,
             onclickSubmit: function (params) {
                 var files = document.getElementById('TankPictureFile').files;
-                if (files.length > 0) {
+                
                     if (window.FormData !== undefined) {
                         var data = new FormData();
                         data.append("TankID", document.getElementById('TankID').value);
@@ -64,8 +64,10 @@ $(function () {
                         data.append("TankWeight", document.getElementById('TankWeight').value);
                         data.append("TankMaterial", document.getElementById('TankMaterial').value);
                         data.append("TankPictureFile", document.getElementById('TankPictureFile').value);                        
-                        for (var x = 0; x < files.length; x++) {
-                            data.append("file" + x, files[x]);
+                        if (files.length > 0) {
+                            for (var x = 0; x < files.length; x++) {
+                                data.append("file" + x, files[x]);
+                            }
                         }
                         $.ajax({
                             type: "POST",
@@ -74,7 +76,6 @@ $(function () {
                             processData: false,
                             data: data,
                             success: function (result) {
-                                alert(result);
                             },
                             error: function (xhr, status, p3) {
                                 alert(xhr.responseText);
@@ -83,7 +84,7 @@ $(function () {
                     } else {
                         alert("Браузер не поддерживает загрузку файлов HTML5!");
                     }
-                }
+                
             },
             afterComplete: function (response) {
                 if (response.responseText) {
