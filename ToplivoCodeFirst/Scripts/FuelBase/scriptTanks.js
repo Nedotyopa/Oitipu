@@ -4,15 +4,15 @@ $(function () {
         url: "/JQGridTanks/GetTanks",
         datatype: 'json',
         mtype: 'Get',
-        colNames: ['TankID', 'Емкость', 'Объем', 'Вес', 'Материал', 'Изображение', 'Файл'],
+        colNames: ['TankID', 'Емкость', 'Объем', 'Вес', 'Материал', 'Файл','Изображение'],
         colModel: [
             { key: true, hidden: true, name: 'TankID', index: 'TankID', editable: true },
             { key: false, name: 'TankType', index: 'TankType', sortable: true, editable: true, search: true},
             { key: false, name: 'TankVolume', index: 'TankVolume', sortable: false, formatter: 'number', formatoptions: { decimalSeparator: "," }, unformat: unformatNumber1, editable: true, search: false},
             { key: false, name: 'TankWeight', index: 'TankWeight', sortable: false, formatter: 'number', formatoptions: { decimalSeparator: "," }, unformat: unformatNumber2, editable: true, search: false },
             { key: false, name: 'TankMaterial', index: 'TankMaterial', sortable: true, editable: true, search: true },
-            { key: false, name: 'TankPicture', index: 'TankPicture', editable: true, formatter: imageFormat, unformat: unformatFile},
-            { key: false, name: 'TankPictureFile', index: 'TankPictureFile', width:1, sortable: false, edittype: 'file', editable: true,  search: false }
+            { key: false, hidden: true, name: 'TankPicture', index: 'TankPicture', editable: true, formatter: imageFormat, unformat: unformatFile},
+            { key: false, name: 'TankPictureFile', index: 'TankPictureFile', formatter: imageFormat, sortable: false, edittype: 'file', editable: true, search: false }
                     ],
         pager: jQuery('#jqControls'),
         rowNum: 15,        
@@ -136,5 +136,7 @@ function unformatFile(cellValue, options, cellObject) {
     return $('img', cellObject).attr('src');
 }
 function imageFormat(cellvalue, options, rowObject) {
-    return '<img src=' + cellvalue + ' alt="Фотография отсутствует" width="25" height="25">';
+    return '<img src=' + rowObject["TankPicture"] + ' alt="Фотография отсутствует" width="25" height="25">';
 }
+
+
