@@ -1,4 +1,4 @@
-﻿/// <reference path="jquery.jqGrid.js" />
+﻿//Работа с данными таблицы Tanks с помощью jqGrid плагина JavaScript библиотеки jQuery
 $(function () {
     $("#jqGrid").jqGrid({
         url: "/JQGridTanks/GetTanks",

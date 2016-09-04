@@ -1,9 +1,9 @@
-﻿using ToplivoCodeFirst.Models;
+﻿//Контроллер для работы с данными таблицы Tanks с помощью jqGrid плагина JavaScript библиотеки jQuery
+using ToplivoCodeFirst.Models;
 using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web;
 
 namespace ToplivoCodeFirst.Controllers
 {

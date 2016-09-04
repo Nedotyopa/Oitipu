@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿//Класс для представление данных из класса T, разбитыми на порции - страницы
+using System.Collections.Generic;
 
 
 namespace ToplivoCodeFirst.Models

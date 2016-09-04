@@ -1,11 +1,11 @@
-﻿using System;
+﻿//Класс для инициализации базы данных путем заполнения ее таблиц тестовым набором записей
+using System;
 using System.Data.Entity;
 using System.IO;
 using System.Web;
 
 namespace ToplivoCodeFirst.Models
 {
-    //Класс для инициализации базы данных путем заполнения ее таблиц тестовым набором записей
     public class ToplivoDbInitializer_runSQL : DropCreateDatabaseAlways<ToplivoContext>
     {
         protected override void Seed(ToplivoContext db)

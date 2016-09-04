@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿//Класс пользовательского Helpera, позволяющего производить разбиение на страницы,
+//используется соответствующим представлением.
+using System.Text;
 using System.Web.Mvc;
 using ToplivoCodeFirst.Models;
 

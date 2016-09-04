@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Реализация интерфейса IRepository<Operation> для объекта класса Tank,
+//содержит описание методов для работы с данными таблицы Tanks, связанной с объектом Tank
+using System;
 using System.Linq;
 using System.Data.Entity;
 using System.Collections.Generic;

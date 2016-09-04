@@ -1,9 +1,10 @@
-﻿using System;
+﻿//Класс для инициализации базы данных путем заполнения ее таблиц тестовым набором записей
+
+using System;
 using System.Data.Entity;
 
 namespace ToplivoCodeFirst.Models
 {
-    //Класс для инициализации базы данных путем заполнения ее таблиц тестовым набором записей
     public class ToplivoDbInitializer : CreateDatabaseIfNotExists<ToplivoContext>
     {
         protected override void Seed(ToplivoContext db)

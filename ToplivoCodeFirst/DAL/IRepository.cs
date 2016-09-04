@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Интерфейс для определения структуры классов репозитариев для работы с данными конкретных таблиц -
+//описывает набор необходимых методов - типовых операций с данными (CRUD)
+using System;
 using System.Collections.Generic;
 
 namespace ToplivoCodeFirst.Models

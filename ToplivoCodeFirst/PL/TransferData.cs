@@ -1,6 +1,8 @@
-﻿namespace ToplivoCodeFirst.Models
+﻿//Структра для хранения данных сеанса, используется для сохранения выбора значений параметров, сделанного  пользователем,
+//при переходе от одной страницы к другой.
+
+namespace ToplivoCodeFirst.Models
 {
-    //Класс для хранения данных сеанса
     public struct TransferData
     {
         public int TankPage; // номер текущей страницы для работы с табличными данными в Tanks

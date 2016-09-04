@@ -1,4 +1,5 @@
-﻿DECLARE @Symbol CHAR(52)= 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+﻿-- T-SQL скрипт для первичной инициализации базы данных
+DECLARE @Symbol CHAR(52)= 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
 		@Position INT,
 		@i INT,
 		@NameLimit INT,

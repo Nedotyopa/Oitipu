@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿//Класс контекста, отвечающий за связь с базой данных
+
+using System.Data.Entity;
 using ToplivoCodeFirst.Models;
 namespace ToplivoCodeFirst.Models
 {

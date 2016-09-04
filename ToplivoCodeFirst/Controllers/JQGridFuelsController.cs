@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Контроллер для работы с данными таблицы Fuels с помощью jqGrid плагина JavaScript библиотеки jQuery
+using System;
 using System.Linq;
 using System.Web.Mvc;
 using ToplivoCodeFirst.Models;

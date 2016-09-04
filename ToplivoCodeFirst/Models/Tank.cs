@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿//Класс, отображаемый в таблицу Tanks базы данных
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ToplivoCodeFirst.Models

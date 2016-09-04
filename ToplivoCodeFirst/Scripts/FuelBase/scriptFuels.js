@@ -1,4 +1,5 @@
-﻿$(function () {
+﻿//Работа с данными таблицы Fuels с помощью jqGrid плагина JavaScript библиотеки jQuery
+$(function () {
     $("#jqGrid").jqGrid({
         url: "/JQGridFuels/GetFuels",
         datatype: 'json',

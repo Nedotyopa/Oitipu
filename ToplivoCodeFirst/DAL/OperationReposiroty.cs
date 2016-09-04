@@ -1,4 +1,7 @@
-﻿using System;
+﻿//Реализация интерфейса IRepository<Operation> для объекта класса Operation,
+//содержит описание методов для работы с данными таблицы Operations, связанной с объектом Operation
+
+using System;
 using System.Linq;
 using System.Data.Entity;
 using System.Collections.Generic;

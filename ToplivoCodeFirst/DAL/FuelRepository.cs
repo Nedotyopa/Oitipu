@@ -1,4 +1,7 @@
-﻿using System;
+﻿//Реализация интерфейса IRepository<Fuel> для объекта класса Fuel,
+//содержит описание методов для работы с данными таблицы Fuels, связанной с объектом Fuel
+
+using System;
 using System.Linq;
 using System.Data.Entity;
 using System.Collections.Generic;

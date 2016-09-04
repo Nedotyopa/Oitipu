@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Параметризованная версия реализации интерфейса IRepository<T> для объекта класса T,
+//содержит описание методов для работы с данными таблицы, свзанной с объектом T
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace ToplivoCodeFirst.Models
         {
             db = context;
         }
-        //Создать новый об'ект
+        //Создать новый объект
         public void Create(T item)
         {
             db.Set<T>().Add(item);
@@ -42,7 +44,7 @@ namespace ToplivoCodeFirst.Models
         {
             return db.Set<T>();
         }
-        //Возвращает коллекцию об'ектов, удовлетворяющих заданному условию, для размещения на странице заданного размера и номера
+        //Возвращает коллекцию объектов, удовлетворяющих заданному условию, для размещения на странице заданного размера и номера
         public PagedCollection<T> GetNumberItems(Func<T, bool> predicate, int page = 1, int pageSize = 30)
         {
             IEnumerable<T> items = db.Set<T>().Where(predicate).OrderBy(t => t);
