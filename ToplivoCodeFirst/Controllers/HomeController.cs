@@ -34,15 +34,10 @@ namespace ToplivoCodeFirst.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Описание приложения";
+            ViewBag.Message = "Топливная база";
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Страница с контактыми данными";
-            return View();
-        }
         protected override void Dispose(bool disposing)
         {
             unitOfWork.Dispose();

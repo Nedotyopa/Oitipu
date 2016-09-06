@@ -25,8 +25,7 @@ namespace ToplivoCodeFirst.Models
             string[] tank_voc = { "Цистерна_", "Ведро_", "Бак_", "Фляга_", "Цистерна_"};//словарь названий емкостей
             string[] material_voc = { "Сталь", "Платина", "Алюминий", "ПЭТ", "Чугун", "Алюминий", "Сталь"};//словарь названий видов топлива
             int count_tank_voc = tank_voc.GetLength(0);
-            int count_material_voc = material_voc.GetLength(0);
-            
+            int count_material_voc = material_voc.GetLength(0);            
             for (int tankID=1; tankID <= tanks_number; tankID++)
             {
                 tankType = tank_voc[randObj.Next(count_tank_voc)] + tankID.ToString();
@@ -47,7 +46,6 @@ namespace ToplivoCodeFirst.Models
             }
 
             //Заполнение таблицы операций
-
             for (int operationID = 1; operationID <= operations_number; operationID++)
             {
                 int tankID = randObj.Next(1,tanks_number-1);
@@ -57,7 +55,7 @@ namespace ToplivoCodeFirst.Models
                 DateTime operationdate = today.AddDays(-operationID);
                 db.Operations.Add(new Operation { OperationID= operationID, TankID = tankID, FuelID = fuelID, Inc_Exp= inc_exp, Date= operationdate });
             }
-            //сохранение изменений в базу данных, саязанную с объектом контекста
+            //сохранение изменений в базу данных, связанную с объектом контекста
             db.SaveChanges();
         }
         

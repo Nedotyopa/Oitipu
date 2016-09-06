@@ -10,16 +10,18 @@ namespace ToplivoCodeFirst.Models
     {
         protected override void Seed(ToplivoContext db)
         {
+            //задание пути к файлу с текстом T-SQL инструкции
             string readPath = HttpContext.Current.Server.MapPath("~") + "/Scripts/FuelBase/FillDB.sql";
+
+            //считывание текста SQL инструкции из внешнего текстового файла
             string SQLstring = "";
             try
             {
-                //считывание текста SQL инструкции из внешнего текстового файла
                 using (StreamReader sr = new StreamReader(readPath, System.Text.Encoding.Default))
                 {
                     SQLstring = sr.ReadToEnd();
                 }
-                //Выполнение SQL инструкции
+                //Выполнение T-SQL инструкции
                 db.Database.ExecuteSqlCommand (SQLstring);
                 base.Seed(db);
             }
