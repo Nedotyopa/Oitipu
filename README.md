@@ -11,6 +11,6 @@ Entity Framework на основе классов Fuel, Tank, Operation созд
 
 Для упрощения работы с различными репозиториями реализован паттерн Unit of Work (класс UnitOfWork). Это позволяет гарантировать, что все репозитории будут использовать один и тот же контекст данных. Доступ к конкретному репозитарию в контроллерах осуществляется как вызов свойства экземпляра UnitOfWork.
 
-Отображение и работа с табличными данными реализованы двумя способами: путем динамического формирования страниц на стороне сервера и с использованием клиентского JavaScript элемента jqGrid  (соответствующий пакет Nuget называется jQuery.jqGrid,  рабочий проект-пример можно скачать по ссылке: https://github.com/sourabhsomani/jqGrid-Using-MVC, а его описание: http://www.c-sharpcorner.com/article/performing-crud-operation-using-jqgrid-in-Asp-Net-mvc/)
+Отображение и работа с табличными данными реализованы двумя способами: путем динамического формирования страниц на стороне сервера и с использованием клиентского JavaScript элемента jqGrid  (соответствующий пакет Nuget называется jQuery.jqGrid,  рабочий проект-пример, кроме текущего можно скачать по ссылке: https://github.com/sourabhsomani/jqGrid-Using-MVC, а его описание: http://www.c-sharpcorner.com/article/performing-crud-operation-using-jqgrid-in-Asp-Net-mvc/)
 
 
