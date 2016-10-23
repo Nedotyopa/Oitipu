@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ToplivoCodeFirst.Controllers;
 using System.Web.Mvc;
+using Moq;
+using System.Web;
 
 namespace ToplivoCodeFirst.Tests.Controllers
 {
@@ -10,9 +12,14 @@ namespace ToplivoCodeFirst.Tests.Controllers
         [TestMethod]
         public void Index()
         {
+            //имитация сессии
+            var context = new Mock<ControllerContext>();
+            var session = new Mock<HttpSessionStateBase>();
+            context.Setup(m => m.HttpContext.Session).Returns(session.Object);
+
             // Arrange
             HomeController controller = new HomeController();
-
+            controller.ControllerContext = context.Object;
             // Act
             ViewResult result = controller.Index() as ViewResult;
 
